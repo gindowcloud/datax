@@ -1,0 +1,8 @@
+requests
+pydantic
+uvicorn
+python-dotenv
+fastapi
+fastapi_pagination
+SQLAlchemy
+passlib

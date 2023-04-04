@@ -1,0 +1,55 @@
+@import url('element-go/dist/style.css');
+@import url('element-plus/dist/index.css');
+
+/* Reset */
+html, body {
+  margin: 0;
+  font-size: var(--el-font-size-base);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';  
+}
+
+/* Common */
+.m-20 { margin: 20px; }
+.p-20 { padding: 20px; }
+.mt-0 { margin-top: 0; }
+.mt-5 { margin-top: 5px; }
+.mt-10 { margin-top: 10px; }
+.mt-15 { margin-top: 15px; }
+.mt-20 { margin-top: 20px; }
+.mb-0 { margin-bottom: 0; }
+.mb-5 { margin-bottom: 5px; }
+.mb-10 { margin-bottom: 10px; }
+.mb-20 { margin-bottom: 20px; }
+.ml-5 { margin-left: 5px; }
+.ml-10 { margin-left: 10px; }
+.mr-5 { margin-right: 5px; }
+.mr-10 { margin-right: 10px; }
+.wp-100 { width: 100%; }
+.float-left { float: left; }
+.float-right { float: right; }
+.text-left { text-align: left; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.text-capitalize { text-transform: capitalize; }
+.text-uppercase { text-transform: uppercase; }
+.text-lowercase { text-transform: lowercase; }
+.color-red { color: red; }
+.color-blue { color: var(--el-color-primary); }
+.color-orange { color: #f60; }
+.color-green { color: #093; }
+.color-light { color: #ccc; }
+.pointer { cursor: pointer; }
+.hidden { display: none; }
+.block { display: block; }
+.flex { display: flex; }
+.round { border-radius: 50%; }
+.img-48 { width: 48px; height: 48px; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } /* 文本超出 */
+.padding-0 { padding: 0; }
+
+/* Layout */
+.container { padding: 20px; }
+
+/* Element Plus */
+.el-table .el-link .el-icon { margin-right: 3px; }
+.el-table .icon-state { float: left; margin-top: 5px; margin-right: 5px; }
