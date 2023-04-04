@@ -9,8 +9,8 @@ declare module "axios" {
 }
 
 // 请求失败
-const reject = (data: { code?: string, detail?: string }) => {
-  ElMessage.error(data.detail ?? "请求失败") // 提示后台消息
+const reject = (data: any) => {
+  ElMessage.error(data?.detail ?? "请求失败") // 提示后台消息
   return Promise.reject(data)
 }
 
@@ -20,7 +20,7 @@ const request = axios.create({ baseURL: import.meta.env.VITE_BASE_URL })
 // 响应处理
 request.interceptors.response.use(
   response => response.data.code === 200 ? response.data : reject(response.data),
-  error => reject(error.response.data)
+  error => reject(error.response?.data)
 )
 
 export default {

@@ -1,13 +1,18 @@
 import hashlib
+from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
 from .models import User, AccessToken
 
 
-def get_user_by_id(db: Session, model_id: str):
+def search(db: Session):
+    return paginate(db.query(User))
+
+
+def find(db: Session, model_id: str):
     return db.query(User).filter(User.id == model_id).first()
 
 
-def get_user_by_username(db: Session, username: str):
+def find_by_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
 

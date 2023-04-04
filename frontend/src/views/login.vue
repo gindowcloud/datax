@@ -2,12 +2,12 @@
   <div class="page">
     <div class="form">
       <el-form ref="form" :model="data" :rules="rules" label-suffix=":" label-width="100px" @submit.prevent="submit(form)">
-        <div class="logo">DataX</div>
+        <div class="logo">{{ appName }}</div>
         <el-form-item label="用户账户" prop="username">
           <el-input v-model="data.username" clearable placeholder="登陆账户" />
         </el-form-item>
         <el-form-item label="用户密码" prop="password">
-          <el-input v-model="data.password" clearable placeholder="登陆密码" type="password" />
+          <el-input v-model="data.password" clearable placeholder="登陆密码" type="password" show-password />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" :loading="loading" native-type="submit">登陆</el-button>
@@ -25,6 +25,7 @@ import { FormInstance, FormRules } from 'element-plus'
 import cookie from 'js-cookie'
 import api from '../api/index'
 
+const appName = import.meta.env.VITE_APP_NAME
 const router = useRouter()
 const form = ref<FormInstance>()
 const loading = ref<boolean>(false)
@@ -55,6 +56,6 @@ const reset = (form: FormInstance | undefined) => {
 <style scoped>
 .page { min-height: 100vh; background-color: #000; }
 .page .form { padding: calc(50vh - 140px) 0; }
-.page .form .el-form { max-width: 400px; margin: 0 auto; padding: 40px; border-radius: 4px; background-color: #fff; }
+.page .form .el-form { max-width: 400px; margin: 0 auto; padding: 40px; background-color: #fff; }
 .page .form .el-form .logo { text-align: center; margin-top: 22px; padding-bottom: 28px; font-size: 20px; }
 </style>

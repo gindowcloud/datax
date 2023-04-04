@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, Boolean, TIMESTAMP
-from ship.database import model
+from ..database import model
 
 
 class User(model):

@@ -17,15 +17,20 @@ class Params(BaseModel, AbstractParams):
 
 
 class Page(AbstractPage[T], Generic[T]):
+    code: int
     data: Sequence[T]
-    size: int
-    page: int
-    total: int
-    pages: int
+    meta: dict
 
     __params_type__ = Params
 
     @classmethod
-    def create(cls, data: data, total: total, params: Params) -> Page[T]:
+    def create(cls, data: data, total: int, params: Params) -> Page[T]:
         pages = math.ceil(total / params.size)
-        return cls(data=data, size=params.size, page=params.page, total=total, pages=pages)
+        return cls(code=200, data=data, meta={
+            "pagination": {
+                "size": params.size,
+                "page": params.page,
+                "total": total,
+                "pages": pages
+            }
+        })

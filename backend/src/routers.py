@@ -2,17 +2,23 @@ import time
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from ship.database import get_db
-from ship.authentication import authenticate, session
-from container.user.routers import router as user_router
+from .database import get_db
+from .authentication import authenticate, session
+from .user.schemas import User
+from .user.routers import router as user_router
 
 router = APIRouter()
-router.include_router(user_router, prefix="/user")
+router.include_router(user_router, prefix="/users")
 
 
 class Item(BaseModel):
     username: str
     password: str
+
+
+class Data(BaseModel):
+    code: int
+    data: User
 
 
 # 接口心跳
@@ -46,7 +52,7 @@ async def logout():
     }
 
 
-@router.get("/profile")
+@router.get("/profile", response_model=Data)
 async def profile(user=Depends(session)):
     return {
         "code": 200,

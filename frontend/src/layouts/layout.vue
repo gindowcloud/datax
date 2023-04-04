@@ -1,5 +1,5 @@
 <template>
-  <ex-layout :menu="data" title="数据管理平台" homepage="/dashboard" background-color="#000" text-color="#ccc" active-text-color="#fff">
+  <ex-layout :menu="data" :title="appName" homepage="/dashboard" background-color="#000" text-color="#ccc" active-text-color="#fff">
     <template #account>
       <el-link :underline="false" class="logout" @click="logout"><icon-park-power class="el-icon" /></el-link>
     </template>
@@ -15,6 +15,7 @@ import store from '../store'
 import api from '../api'
 import request from '../api/request'
 
+const appName = import.meta.env.VITE_APP_NAME
 const router = useRouter()
 const logout = () => {
   api.logout({}).then(() => {
