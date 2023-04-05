@@ -11,5 +11,14 @@ router = APIRouter()
 
 
 @router.get("", response_model=Page[schemas.User], name="用户列表")
-def observations(db: Session = Depends(get_db), user=Depends(session)):
+def search(db: Session = Depends(get_db), user=Depends(session)):
     return tasks.search(db)
+
+
+@router.delete("/{model_id}", name="删除用户")
+def remove(model_id, db: Session = Depends(get_db), user=Depends(session)):
+    result = tasks.delete(db, model_id)
+    return {
+        "code": 200,
+        "data": result
+    }

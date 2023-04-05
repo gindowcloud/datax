@@ -1,7 +1,7 @@
-import type { TypeUser } from '@/types'
+import type { User } from '../types'
 import { defineStore } from 'pinia'
 
-const user: TypeUser = {}
+const user: User = {}
 
 export default defineStore('main', {
   state: () => {

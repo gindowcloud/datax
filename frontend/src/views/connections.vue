@@ -1,5 +1,5 @@
 <template>
-  <ex-page-header title="用户管理" />
+  <ex-page-header title="数据连接" />
   <ex-table :data="data" :columns="columns" :loaded="loaded" :loading="loading" :total="total" @page-change="getData"
     allow-view :viewer="viewer"
     allow-remove @remove="remove" />
@@ -7,20 +7,23 @@
 
 <script lang="ts" setup>
 import { ref, reactive } from 'vue'
-import store from '../store'
 import api from '../api'
 
 const columns = ref([
-  { label: '编号', prop: 'id', width: 240 },
-  { label: '用户', prop: 'username' }
+  { label: '编号', prop: 'id', width: 200 },
+  { label: '类型', prop: 'driver', width: 200 },
+  { label: '名称', prop: 'name' },
 ])
 
 const viewer = ref([
-  { label: '用户编号', prop: 'id' },
-  { label: '用户账户', prop: 'username' }
+  { label: '连接编号', prop: 'id' },
+  { label: '连接名称', prop: 'name' },
+  { label: '连接类型', prop: 'driver' },
+  { label: '数据库名', prop: 'database' },
+  { label: '连接地址', prop: 'host' },
+  { label: '连接端口', prop: 'port' },
 ])
 
-const session = store().user
 const loaded = ref(false)
 const loading = ref(false)
 const total = ref(0)
@@ -29,11 +32,8 @@ const data = ref([])
 const getData = (page = 1) => {
   loading.value = true
   para.page = page
-  api.users.select(para).then(ret => {
-    data.value = ret.data.map((j: any) => {
-      j.$removeDisabled = j.id === session.id
-      return j
-    })
+  api.connections.select(para).then(ret => {
+    data.value = ret.data
     total.value = ret.meta.pagination.total
   }).finally(() => {
     loading.value = false
@@ -42,7 +42,7 @@ const getData = (page = 1) => {
 }
 
 const remove = (item: any) => {
-  api.users.delete(item.id).then(() => getData())
+  api.connections.delete(item.id).then(() => getData())
 }
 
 getData()

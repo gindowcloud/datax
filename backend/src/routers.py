@@ -6,9 +6,11 @@ from .database import get_db
 from .authentication import authenticate, session
 from .user.schemas import User
 from .user.routers import router as user_router
+from .connection.routers import router as connection_router
 
 router = APIRouter()
 router.include_router(user_router, prefix="/users")
+router.include_router(connection_router, prefix="/connections")
 
 
 class Item(BaseModel):
