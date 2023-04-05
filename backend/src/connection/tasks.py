@@ -28,15 +28,33 @@ def create(db: Session, item: schemas.ConnectionCreate):
         )
         db.add(model)
         db.commit()
+        db.refresh(model)
         return model
     except:
         return None
 
 
-def delete(db: Session, model_id):
-    connection = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
-    if connection is None:
+def update(db: Session, model_id, item: schemas.ConnectionCreate):
+    model = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
+    if model is None:
         return None
-    db.delete(connection)
+    model.name = item.name
+    model.driver = item.driver
+    model.host = item.host
+    model.port = item.port
+    model.username = item.username
+    model.database = item.database
+    if item.password:
+        model.password = item.password
+    db.commit()
+    db.refresh(model)
+    return model
+
+
+def delete(db: Session, model_id):
+    model = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
+    if model is None:
+        return None
+    db.delete(model)
     db.commit()
     return True

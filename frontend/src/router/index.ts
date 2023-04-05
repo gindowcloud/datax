@@ -14,7 +14,7 @@ const router = createRouter({
         { path: 'dashboard', component: () => import('../views/dashboard.vue') },
         { path: 'tasks', component: () => import('../views/tasks.vue') },
         { path: 'users', component: () => import('../views/users.vue') },
-        { path: 'connections', component: () => import('../views/connections.vue') },
+        { path: 'connections', component: () => import('../views/connections/index.vue') },
       ],
       meta: { auth: true }
     },

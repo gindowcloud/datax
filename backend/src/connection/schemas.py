@@ -15,7 +15,7 @@ class ConnectionBase(BaseModel):
 
 
 class ConnectionCreate(ConnectionBase):
-    password: str
+    password: str = None
     pass
 
 

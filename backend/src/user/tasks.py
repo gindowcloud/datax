@@ -17,26 +17,27 @@ def find_by_username(db: Session, username: str):
 
 
 def delete(db: Session, model_id):
-    connection = db.query(models.User).filter(models.User.id == model_id).one_or_none()
-    if connection is None:
+    model = db.query(models.User).filter(models.User.id == model_id).one_or_none()
+    if model is None:
         return None
-    db.delete(connection)
+    db.delete(model)
     db.commit()
     return True
 
 
 def get_access_token(db: Session, token: str):
     model_id, token = token.split("|")
-    instance = db.query(models.AccessToken).filter(models.AccessToken.id == model_id).first()
-    if instance is None:
+    model = db.query(models.AccessToken).filter(models.AccessToken.id == model_id).first()
+    if model is None:
         return None
-    elif instance.token != hashlib.sha256(token.encode()).hexdigest():
+    elif model.token != hashlib.sha256(token.encode()).hexdigest():
         return None
-    return instance
+    return model
 
 
 def put_access_token(db: Session, user_id: int, token: str):
     model = models.AccessToken(user_id=user_id, token=token)
     db.add(model)
     db.commit()
+    db.refresh(model)
     return model

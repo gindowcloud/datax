@@ -23,13 +23,22 @@ def search(db: Session = Depends(get_db), user=Depends(session)):
 
 @router.post("", response_model=Data, name="新建连接")
 def create(item: schemas.ConnectionCreate, db: Session = Depends(get_db), user=Depends(session)):
-    connection = tasks.find_by_name(db, item.name)
-    if connection:
+    data = tasks.find_by_name(db, item.name)
+    if data:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="名称已存在")
-    connection = tasks.create(db, item)
+    data = tasks.create(db, item)
     return {
         "code": 200,
-        "data": connection
+        "data": data
+    }
+
+
+@router.patch("/{model_id}", name="删除连接")
+def update(model_id, item: schemas.ConnectionCreate, db: Session = Depends(get_db), user=Depends(session)):
+    data = tasks.update(db, model_id, item)
+    return {
+        "code": 200,
+        "data": data
     }
 
 
