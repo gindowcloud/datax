@@ -9,17 +9,25 @@
     <template #cell="{ col, row }">
       <el-tag v-if="col.prop == 'direct'" type="success" effect="plain">{{ row.direct }}</el-tag>
     </template>
+    <template #link="{ row }">
+      <el-button link :icon="Airplay" @click="exec(row)">运行</el-button>
+    </template>
   </ex-table>
   <!-- 编辑表单 -->
-  <edit-form :show="show" :data="item" :connections="connections" @close="close" @submit="submit" />
+  <form-edit :show="show" :data="item" :connections="connections" @close="close" @submit="submit" />
+  <!-- 运行菜单 -->
+  <form-logs :show="logs" :data="item" @submit="done" @close="logs = false" />
 </template>
 
 <script lang="ts" setup>
-import type { Task } from '../../types'
+import type { Task, Connection } from '../../types'
 import { ref, reactive } from 'vue'
-import { Plus  } from '@icon-park/vue-next'
+import { Plus, Airplay } from '@icon-park/vue-next'
+import { ElMessage } from 'element-plus'
+import { $copy } from '../../utils'
 import api from '../../api'
-import editForm from './edit-form.vue'
+import formEdit from './form-edit.vue'
+import formLogs from './form-logs.vue'
 
 const columns = ref([
   { label: '名称', prop: 'name', width: 200 },
@@ -55,7 +63,7 @@ const getData = (page = 1) => {
   })
 }
 
-const connections = ref([])
+const connections = ref<Connection[]>([])
 const getConnections = () => {
   api.connections.select().then(ret => connections.value = ret.data)
 }
@@ -67,19 +75,34 @@ const remove = (row: any) => {
 const open = () => { show.value = true }
 const close = () => { show.value = false }
 const create = () => {
-  item.value = {}
+  item.value = {
+    reader_id: connections.value.find(j => j.direct == 'reader')?.id,
+    writer_id: connections.value.find(j => j.direct == 'writer')?.id
+  }
   open()
 }
 
 const modify = (row: any) => {
   row.password = ''
-  item.value = row
+  item.value = $copy(row)
   open()
 }
 
 const submit = () => {
   close()
   getData()
+}
+
+const logs = ref(false)
+const exec = (row: Task) => {
+  item.value = $copy(row)
+  logs.value = true 
+}
+
+const done = () => {
+  ElMessage.success('添加成功')
+  logs.value = false
+  getData(para.page)
 }
 
 getData()

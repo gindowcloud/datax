@@ -1,11 +1,11 @@
 
 export interface User {
-  id?: string,
+  id?: number,
   name?: string,
 }
 
 export interface Connection {
-  id?: string
+  id?: number
   direct?: string
   driver?: string
   name?: string
@@ -17,12 +17,20 @@ export interface Connection {
 }
 
 export interface Task {
-  id?: string
-  reader_id?: string
-  writer_id?: string
+  id?: number
+  reader_id?: number
+  writer_id?: number
   name?: string
   table?: string
   query?: string
   timer?: string
+  reader?: Connection
+  writer?: Connection
+  jobs?: Job[]
   executed_at?: string
+}
+
+export interface Job {
+  id?: number
+  state?: number
 }

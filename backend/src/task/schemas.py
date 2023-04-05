@@ -1,5 +1,7 @@
+from datetime import datetime
 from pydantic import BaseModel
 from ..connection.schemas import Connection
+from ..job.schemas import Job
 
 
 class TaskBase(BaseModel):
@@ -23,6 +25,7 @@ class Task(TaskBase):
     id: int
     reader: Connection = None
     writer: Connection = None
-    executed_at: int = None
-    created_at: int = None
-    updated_at: int = None
+    jobs: list[Job] = []
+    executed_at: datetime = None
+    created_at: datetime = None
+    updated_at: datetime = None

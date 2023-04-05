@@ -1,6 +1,7 @@
+import { ElMessage } from 'element-plus'
 import axios from  'axios'
 import cookie from 'js-cookie'
-import { ElMessage } from 'element-plus'
+import config from '../config'
 
 declare module "axios" {
   interface AxiosResponse<T = any> {
@@ -10,12 +11,12 @@ declare module "axios" {
 
 // 请求失败
 const reject = (data: any) => {
-  ElMessage.error(data?.detail ?? "请求失败") // 提示后台消息
+  ElMessage.error(data?.message ?? "请求失败") // 提示后台消息
   return Promise.reject(data)
 }
 
 // 发送请求
-const request = axios.create({ baseURL: import.meta.env.VITE_BASE_URL })
+const request = axios.create({ baseURL: config.baseURL })
 
 // 响应处理
 request.interceptors.response.use(
@@ -25,7 +26,7 @@ request.interceptors.response.use(
 
 export default {
 
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: config.baseURL,
   accessToken: '', // 认证信息
 
   get (url: string, params?: {} | null, auth = false) { return this.request('get', url, params, null, auth) },

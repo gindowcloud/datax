@@ -11,9 +11,9 @@ class Resources {
 
   select (para?: {} | null) { return request.get(this.url, para, this.auth) }
   create (para?: {} | null) { return request.post(this.url, para, this.auth) }
-  find (id: string, para?: {} | null) { return request.get(this.url + '/' + id, para, this.auth) }
-  update (id: string, para?: {} | null) { return request.patch(this.url + '/' + id, para, this.auth) }
-  delete (id: string, para?: {} | null) { return request.delete(this.url + '/' + id, para, this.auth) }
+  find (id: number, para?: {} | null) { return request.get(this.url + '/' + id, para, this.auth) }
+  update (id: number, para?: {} | null) { return request.patch(this.url + '/' + id, para, this.auth) }
+  delete (id: number, para?: {} | null) { return request.delete(this.url + '/' + id, para, this.auth) }
   async get (para: { size: number }) {
     para.size = 1
     return this.select(para).then(ret => {
@@ -24,10 +24,12 @@ class Resources {
 }
 
 export default {
+  init: (data?: {}) => request.post('v1/init', data),
   login: (data?: {}) => request.post('v1/login', data),
   logout: (para?: {}) => request.post('v1/logout', para, true),
   profile: (para?: {}) => request.get('v1/profile', para, true),
   tasks: new Resources('v1/tasks', true),
   users: new Resources('v1/users', true),
-  connections: new Resources('v1/connections', true)
+  connections: new Resources('v1/connections', true),
+  jobs: new Resources('v1/jobs', true),
 } 

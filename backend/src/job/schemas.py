@@ -2,19 +2,23 @@ from datetime import datetime
 from pydantic import BaseModel
 
 
-class UserBase(BaseModel):
-    username: str = None
+class JobBase(BaseModel):
+    state: int = None
 
     class Config:
         orm_mode = True
 
 
-class UserCreate(UserBase):
-    password: str = None
+class JobCreate(JobBase):
+    task_id: int
     pass
 
 
-class User(UserBase):
+class JobUpdate(JobBase):
+    pass
+
+
+class Job(JobBase):
     id: int
     created_at: datetime = None
     updated_at: datetime = None

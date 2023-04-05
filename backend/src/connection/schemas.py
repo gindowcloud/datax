@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel
 
 
@@ -22,5 +23,5 @@ class ConnectionCreate(ConnectionBase):
 
 class Connection(ConnectionBase):
     id: int
-    created_at: int = None
-    updated_at: int = None
+    created_at: datetime = None
+    updated_at: datetime = None

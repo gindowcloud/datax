@@ -6,15 +6,15 @@
         </el-form-item>
         <el-form-item label="读数据库" prop="reader_id">
           <el-select v-model="item.reader_id">
-            <el-option v-for="(item, key) in connections" :value="item.id" :label="item.name" />
+            <el-option v-for="(item, key) in connections.filter(j => j.direct == 'reader')" :value="item.id" :label="item.name" />
           </el-select>
         </el-form-item>
         <el-form-item label="查询语句" prop="query">
-          <el-input v-model="item.query" type="textarea" :rows="8" />
+          <el-input v-model="item.query" type="textarea" :rows="9" input-style="white-space: nowrap" />
         </el-form-item>
         <el-form-item label="写数据库" prop="writer_id">
           <el-select v-model="item.writer_id">
-            <el-option v-for="item in connections" :value="item.id" :label="item.name" />
+            <el-option v-for="item in connections.filter(j => j.direct == 'writer')" :value="item.id" :label="item.name" />
           </el-select>
         </el-form-item>
         <el-form-item label="写入表格" prop="table">
@@ -41,7 +41,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', payload: object): void
   (event: 'submit'): void
   (event: 'close'): void
 }>()
@@ -49,7 +48,7 @@ const emit = defineEmits<{
 const loading = ref(false)
 const item = ref<Task>({})
 const form = ref<FormInstance>()
-  const rules = reactive<FormRules>({
+const rules = reactive<FormRules>({
   name: [{ required: true, message: '请输入任务名称', trigger: 'blur' }],
   reader_id: [{ required: true, message: '请输入读数据库', trigger: 'blur' }],
   writer_id: [{ required: true, message: '请输入写数据库', trigger: 'blur' }],

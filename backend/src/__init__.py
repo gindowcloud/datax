@@ -3,6 +3,7 @@ from fastapi_pagination import add_pagination
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import router
 from .config import config
+from .exception import set_exceptions
 
 
 def create_app():
@@ -20,6 +21,9 @@ def create_app():
 
     # 分页功能
     add_pagination(app)
+
+    # 错误返回
+    set_exceptions(app)
 
     # 核心路由
     app.include_router(router, prefix=config.prefix)

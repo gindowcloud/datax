@@ -1,17 +1,22 @@
 import time
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
-from .database import get_db
+from .database import get_db, Model, engine
+from .response import success
 from .authentication import authenticate, session
-from .user.schemas import User
-from .task.routers import router as task_router
+from .user import tasks, schemas
 from .user.routers import router as user_router
+from .task.routers import router as task_router
+from .job.routers import router as job_router
 from .connection.routers import router as connection_router
 
+Model.metadata.create_all(bind=engine)  # 建数据表
+
 router = APIRouter()
-router.include_router(task_router, prefix="/tasks")
 router.include_router(user_router, prefix="/users")
+router.include_router(task_router, prefix="/tasks")
+router.include_router(job_router, prefix="/jobs")
 router.include_router(connection_router, prefix="/connections")
 
 
@@ -22,43 +27,40 @@ class Item(BaseModel):
 
 class Data(BaseModel):
     code: int
-    data: User
+    data: schemas.User
 
 
 # 接口心跳
 @router.get("/", name="接口心跳")
-async def home():
-    return {
-        "code": 200,
-        "message": "请求成功",
-        "data": {
-            "status": "up",
-            "timestamp": time.time()
-        }
-    }
+def home():
+    return success({
+        "status": "up",
+        "timestamp": time.time()
+    })
 
 
 @router.post("/login")
-async def login(item: Item, db: Session = Depends(get_db)):
-    access_token = authenticate(db, item.username, item.password)
-    if not access_token:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="登陆失败")
-    return {
-        "code": 200,
-        "data": access_token
-    }
+def login(item: Item, db: Session = Depends(get_db)):
+    data = authenticate(db, item.username, item.password)
+    return success(data)
 
 
 @router.post("/logout")
-async def logout():
-    return {
-        "code": 200
-    }
+def logout():
+    return success()
 
 
 @router.get("/profile", response_model=Data)
-async def profile(user=Depends(session)):
-    return {
-        "code": 200,
-        "data": user
-    }
+def profile(user=Depends(session)):
+    return success(user)
+
+
+@router.post("/init", name="安装程序")
+def setup(item: schemas.UserCreate, db: Session = Depends(get_db)):
+    item.username = "admin"
+    item.password = "admin"
+    data = tasks.find_by_username(db, item.username)
+    if data:
+        raise HTTPException(500, detail="程序已安装")
+    data = tasks.create(db, item)
+    return success(data)

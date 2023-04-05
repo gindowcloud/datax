@@ -6,3 +6,4 @@ fastapi
 fastapi_pagination
 SQLAlchemy
 passlib
+starlette

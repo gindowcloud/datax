@@ -2,7 +2,7 @@
   <div class="page">
     <div class="form">
       <el-form ref="form" :model="data" :rules="rules" label-suffix=":" label-width="100px" @submit.prevent="submit(form)">
-        <div class="logo">{{ appName }}</div>
+        <div class="logo">{{ config.appName }}</div>
         <el-form-item label="用户账户" prop="username">
           <el-input v-model="data.username" clearable placeholder="登陆账户" />
         </el-form-item>
@@ -23,9 +23,9 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { FormInstance, FormRules } from 'element-plus'
 import cookie from 'js-cookie'
-import api from '../api/index'
+import config from '../config'
+import api from '../api'
 
-const appName = import.meta.env.VITE_APP_NAME
 const router = useRouter()
 const form = ref<FormInstance>()
 const loading = ref<boolean>(false)

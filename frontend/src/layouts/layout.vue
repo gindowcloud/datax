@@ -1,5 +1,5 @@
 <template>
-  <ex-layout :menu="data" :title="appName" homepage="/dashboard" background-color="#000" text-color="#ccc" active-text-color="#fff">
+  <ex-layout :menu="data" :title="config.appName" homepage="/dashboard" background-color="#000" text-color="#ccc" active-text-color="#fff">
     <template #account>
       <el-link :underline="false" class="logout" @click="logout"><icon-park-power class="el-icon" /></el-link>
     </template>
@@ -11,11 +11,11 @@
 import { useRouter } from 'vue-router'
 import { ExLayout } from 'element-go'
 import { Airplay, PeoplesTwo, List, SettingOne, LinkThree } from '@icon-park/vue-next'
+import config from '../config'
 import store from '../store'
 import api from '../api'
 import request from '../api/request'
 
-const appName = import.meta.env.VITE_APP_NAME
 const router = useRouter()
 const logout = () => {
   api.logout({}).then(() => {

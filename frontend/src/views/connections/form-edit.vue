@@ -69,7 +69,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', payload: object): void
   (event: 'submit'): void
   (event: 'close'): void
 }>()
@@ -78,9 +77,9 @@ const span = 12
 const loading = ref(false)
 const item = ref<Connection>({})
 const form = ref<FormInstance>()
-  const rules = reactive<FormRules>({
-  driver: [{ required: true, message: '请输入连接类型' }],
-  name: [{ required: true, message: '请输入连接名称' }],
+const rules = reactive<FormRules>({
+  driver: [{ required: true, message: '请输入连接类型', trigger: 'blur' }],
+  name: [{ required: true, message: '请输入连接名称', trigger: 'blur' }],
   host: [{ required: true, message: '请输入连接地址', trigger: 'blur' }],
   port: [{ required: true, message: '请输入连接端口', trigger: 'blur' }],
   username: [{ required: true, message: '请输入连接用户', trigger: 'blur' }],

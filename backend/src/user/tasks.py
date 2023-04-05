@@ -1,7 +1,10 @@
 import hashlib
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
-from . import models
+from passlib.context import CryptContext
+from . import models, schemas
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def search(db: Session):
@@ -14,6 +17,17 @@ def find(db: Session, model_id: int):
 
 def find_by_username(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
+
+
+def create(db: Session, item: schemas.UserCreate):
+    model = models.User(
+        username=item.username,
+        password=pwd_context.encrypt(item.password),
+    )
+    db.add(model)
+    db.commit()
+    db.refresh(model)
+    return model
 
 
 def delete(db: Session, model_id):

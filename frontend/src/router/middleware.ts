@@ -1,7 +1,7 @@
 import type { User } from '../types'
 import store from '../store'
 import request from '../api/request'
-import api from '../api/index'
+import api from '../api'
 
 const user: User = {}
 

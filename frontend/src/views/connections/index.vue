@@ -13,15 +13,16 @@
     </template>
   </ex-table>
   <!-- 编辑表单 -->
-  <edit-form :show="show" :data="item" @close="close" @submit="submit" />
+  <form-edit :show="show" :data="item" @close="close" @submit="submit" />
 </template>
 
 <script lang="ts" setup>
 import type { Connection } from '../../types'
 import { ref, reactive } from 'vue'
 import { Plus  } from '@icon-park/vue-next'
+import { $copy } from '../../utils'
 import api from '../../api'
-import editForm from './edit-form.vue'
+import formEdit from './form-edit.vue'
 
 const columns = ref([
   { label: '方向', prop: 'direct', width: 150 },
@@ -79,7 +80,7 @@ const create = () => {
 
 const modify = (row: any) => {
   row.password = ''
-  item.value = row
+  item.value = $copy(row)
   open()
 }
 

@@ -7,6 +7,7 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', component: () => import('../views/login.vue') },
+    { path: '/init', component: () => import('../views/init.vue') },
     {
       path: '/',
       component: layout,
