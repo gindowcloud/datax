@@ -5,10 +5,12 @@ from pydantic import BaseModel
 from .database import get_db
 from .authentication import authenticate, session
 from .user.schemas import User
+from .task.routers import router as task_router
 from .user.routers import router as user_router
 from .connection.routers import router as connection_router
 
 router = APIRouter()
+router.include_router(task_router, prefix="/tasks")
 router.include_router(user_router, prefix="/users")
 router.include_router(connection_router, prefix="/connections")
 

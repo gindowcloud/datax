@@ -3,11 +3,12 @@ from pydantic import BaseModel
 
 class ConnectionBase(BaseModel):
     name: str
-    driver: str
     host: str
     port: str
     username: str
     database: str
+    direct: str
+    driver: str
     state: bool = None
 
     class Config:
@@ -20,6 +21,6 @@ class ConnectionCreate(ConnectionBase):
 
 
 class Connection(ConnectionBase):
-    id: str
+    id: int
     created_at: int = None
     updated_at: int = None

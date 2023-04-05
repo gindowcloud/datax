@@ -11,7 +11,6 @@ import store from '../store'
 import api from '../api'
 
 const columns = ref([
-  { label: '编号', prop: 'id', width: 240 },
   { label: '用户', prop: 'username' }
 ])
 

@@ -1,18 +1,31 @@
 <template>
   <el-dialog :model-value="show" title="添加连接" @close="close">
     <el-form ref="form" :model="item" :rules="rules" label-width="100px" label-suffix=":">
-      <el-row>
+      <el-row>        
+        <el-col :span="span">
+          <el-form-item label="连接方向" prop="direct">
+            <el-radio-group v-model="item.direct">
+              <el-radio-button label="reader">读数据</el-radio-button>
+              <el-radio-button label="writer">写数据</el-radio-button>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="span">
+          <el-form-item label="连接类型" prop="driver">
+            <el-select v-model="item.driver" @change="driverChange">
+              <el-option value="mysql" label="MySQL" />
+              <el-option value="clickhouse" label="ClickHouse" />
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="span">
           <el-form-item label="连接名称" prop="name">
             <el-input v-model="item.name" />
           </el-form-item>
         </el-col>
         <el-col :span="span">
-          <el-form-item label="连接类型" prop="driver">
-            <el-select v-model="item.driver">
-              <el-option value="mysql">MySQL</el-option>
-              <el-option value="clickhouse">ClickHouse</el-option>
-            </el-select>
+          <el-form-item label="数据库名" prop="database">
+            <el-input v-model="item.database" />
           </el-form-item>
         </el-col>
         <el-col :span="span">
@@ -33,11 +46,6 @@
         <el-col :span="span">
           <el-form-item label="连接密码" prop="password">
             <el-input v-model="item.password" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="span">
-          <el-form-item label="数据库名" prop="database">
-            <el-input v-model="item.database" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -80,6 +88,15 @@ const form = ref<FormInstance>()
 })
 
 watchEffect(() => item.value = props.data)
+
+const mappings = [
+  { driver: 'mysql', port: '3306' },
+  { driver: 'clickhouse', port: '8123' }
+]
+
+const driverChange = (driver: string) => {
+  item.value.port = mappings.find(j => j.driver == driver)?.port
+}
 
 const close = () => emit('close')
 const submit = async (form: FormInstance | undefined) => {

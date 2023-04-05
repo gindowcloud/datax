@@ -7,7 +7,7 @@ def search(db: Session):
     return paginate(db.query(models.Connection))
 
 
-def find(db: Session, model_id: str):
+def find(db: Session, model_id: int):
     return db.query(models.Connection).filter(models.Connection.id == model_id).first()
 
 
@@ -16,30 +16,29 @@ def find_by_name(db: Session, name: str):
 
 
 def create(db: Session, item: schemas.ConnectionCreate):
-    try:
-        model = models.Connection(
-            name=item.name,
-            driver=item.driver,
-            host=item.host,
-            port=item.port,
-            username=item.username,
-            password=item.password,
-            database=item.database,
-        )
-        db.add(model)
-        db.commit()
-        db.refresh(model)
-        return model
-    except:
-        return None
+    model = models.Connection(
+        name=item.name,
+        host=item.host,
+        port=item.port,
+        username=item.username,
+        password=item.password,
+        database=item.database,
+        direct=item.direct,
+        driver=item.driver,
+    )
+    db.add(model)
+    db.commit()
+    db.refresh(model)
+    return model
 
 
 def update(db: Session, model_id, item: schemas.ConnectionCreate):
     model = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
     if model is None:
         return None
-    model.name = item.name
+    model.direct = item.direct
     model.driver = item.driver
+    model.name = item.name
     model.host = item.host
     model.port = item.port
     model.username = item.username

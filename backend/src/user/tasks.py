@@ -8,7 +8,7 @@ def search(db: Session):
     return paginate(db.query(models.User))
 
 
-def find(db: Session, model_id: str):
+def find(db: Session, model_id: int):
     return db.query(models.User).filter(models.User.id == model_id).first()
 
 
