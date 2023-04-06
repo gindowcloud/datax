@@ -1,10 +1,10 @@
 import time
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from .database import get_db, Model, engine
 from .response import success
-from .authentication import authenticate, session
+from .authentication import authenticate, session, password
 from .user import tasks, schemas
 from .user.routers import router as user_router
 from .task.routers import router as task_router
@@ -20,12 +20,17 @@ router.include_router(job_router, prefix="/jobs")
 router.include_router(connection_router, prefix="/connections")
 
 
-class Item(BaseModel):
+class LoginItem(BaseModel):
     username: str
     password: str
 
 
-class Data(BaseModel):
+class PasswordItem(BaseModel):
+    password: str
+    newpassword: str
+
+
+class UserData(BaseModel):
     code: int
     data: schemas.User
 
@@ -40,7 +45,7 @@ def home():
 
 
 @router.post("/login")
-def login(item: Item, db: Session = Depends(get_db)):
+def login(item: LoginItem, db: Session = Depends(get_db)):
     data = authenticate(db, item.username, item.password)
     return success(data)
 
@@ -50,17 +55,21 @@ def logout():
     return success()
 
 
-@router.get("/profile", response_model=Data)
+@router.get("/profile", response_model=UserData)
 def profile(user=Depends(session)):
     return success(user)
 
 
-@router.post("/init", name="安装程序")
-def setup(item: schemas.UserCreate, db: Session = Depends(get_db)):
-    item.username = "admin"
-    item.password = "admin"
+@router.post("/password", response_model=UserData)
+def profile(item: PasswordItem, db: Session = Depends(get_db), user=Depends(session)):
+    data = password(db, user, item.password, item.newpassword)
+    return success(data)
+
+
+@router.post("/setup", response_model=UserData, name="安装程序")
+def setup(db: Session = Depends(get_db)):
+    item = schemas.UserCreate(username="admin", password="admin")
     data = tasks.find_by_username(db, item.username)
-    if data:
-        raise HTTPException(500, detail="程序已安装")
-    data = tasks.create(db, item)
+    if not data:
+        data = tasks.create(db, item)
     return success(data)

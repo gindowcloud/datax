@@ -7,7 +7,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes: [
     { path: '/', component: () => import('../views/login.vue') },
-    { path: '/init', component: () => import('../views/init.vue') },
     {
       path: '/',
       component: layout,
@@ -16,6 +15,7 @@ const router = createRouter({
         { path: 'tasks', component: () => import('../views/tasks/index.vue') },
         { path: 'users', component: () => import('../views/users.vue') },
         { path: 'connections', component: () => import('../views/connections/index.vue') },
+        { path: 'password', component: () => import('../views/password.vue') },
       ],
       meta: { auth: true }
     },

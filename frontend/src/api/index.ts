@@ -24,10 +24,11 @@ class Resources {
 }
 
 export default {
-  init: (data?: {}) => request.post('v1/init', data),
+  setup: (data?: {}) => request.post('v1/setup', data),
   login: (data?: {}) => request.post('v1/login', data),
   logout: (para?: {}) => request.post('v1/logout', para, true),
   profile: (para?: {}) => request.get('v1/profile', para, true),
+  password: (para?: {}) => request.post('v1/password', para, true),
   tasks: new Resources('v1/tasks', true),
   users: new Resources('v1/users', true),
   connections: new Resources('v1/connections', true),

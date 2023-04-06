@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import { useRouter } from 'vue-router'
 import { ExLayout } from 'element-go'
-import { Airplay, PeoplesTwo, List, SettingOne, LinkThree } from '@icon-park/vue-next'
+import { Airplay, PeoplesTwo, List, SettingOne, LinkThree, Lock } from '@icon-park/vue-next'
 import config from '../config'
 import store from '../store'
 import api from '../api'
@@ -28,8 +28,9 @@ const data = [
   { title: '首页', path: '/dashboard', icon: Airplay },
   { title: '任务', path: '/tasks', icon: List },
   { title: '设置', path: '/settings', icon: SettingOne, children: [
-    { title: '用户', path: '/users', icon: PeoplesTwo },
     { title: '连接', path: '/connections', icon: LinkThree },
+    { title: '用户', path: '/users', icon: PeoplesTwo },
+    { title: '密码', path: '/password', icon: Lock },
   ]}
 ]
 </script>

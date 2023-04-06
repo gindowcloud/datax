@@ -9,6 +9,7 @@ from .database import get_db
 from .response import error
 from .errors import ERROR_USER_NOT_FOUND, ERROR_USER_WRONG_PASSWORD, ERROR_USER_TOKEN_EXPIRED
 from .user.tasks import find, find_by_username, put_access_token, get_access_token
+from .user.models import User
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -36,4 +37,14 @@ def session(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
         user = find(db, access_token.user_id)
         if user is None:
             raise error(ERROR_USER_NOT_FOUND)
+    return user
+
+
+# 修改密码
+def password(db: Session, user: User, password: str, newpassword: str):
+    if not pwd_context.verify(password, user.password):
+        raise error(ERROR_USER_WRONG_PASSWORD)
+    user.password = pwd_context.encrypt(newpassword)
+    db.commit()
+    db.refresh(user)
     return user

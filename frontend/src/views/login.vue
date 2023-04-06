@@ -51,6 +51,8 @@ const reset = (form: FormInstance | undefined) => {
   if (!form) return
   form.resetFields()
 }
+
+api.setup()
 </script>
 
 <style scoped>
