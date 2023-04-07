@@ -35,13 +35,13 @@ http://127.0.0.1:8000
 #### 界面预览
 
 用户登陆：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/1.png" style="zoom: 25%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/1.png" style="zoom: 50%;" />
 
 任务管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/2.png" style="zoom:25%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/2.png" style="zoom:50%;" />
 
 连接管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/3.png" style="zoom:25%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/3.png" style="zoom:50%;" />
 
 用户管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/4.png" style="zoom:25%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/4.png" style="zoom:50%;" />
