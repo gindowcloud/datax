@@ -1,36 +1,22 @@
 <template>
   <ex-layout :menu="data" :title="config.appName" homepage="/dashboard" background-color="#000" text-color="#ccc" active-text-color="#fff">
-    <template #account>
-      <el-link :underline="false" class="logout" @click="logout"><icon-park-power class="el-icon" /></el-link>
-    </template>
+    <template #account><view-account /></template>
     <router-view />
   </ex-layout>
 </template>
 
 <script lang="ts" setup>
-import { useRouter } from 'vue-router'
 import { ExLayout } from 'element-go'
-import { Airplay, PeoplesTwo, List, SettingOne, LinkThree, Lock } from '@icon-park/vue-next'
+import { Airplay, PeoplesTwo, List, SettingOne, LinkThree } from '@icon-park/vue-next'
 import config from '../config'
-import store from '../store'
-import api from '../api'
-import request from '../api/request'
+import viewAccount from './components/account.vue'
 
-const router = useRouter()
-const logout = () => {
-  api.logout({}).then(() => {
-    store().user = {}
-    request.delToken()
-    router.push('/')
-  })
-}
 const data = [
   { title: '首页', path: '/dashboard', icon: Airplay },
   { title: '任务', path: '/tasks', icon: List },
   { title: '设置', path: '/settings', icon: SettingOne, children: [
-    { title: '连接', path: '/connections', icon: LinkThree },
     { title: '用户', path: '/users', icon: PeoplesTwo },
-    { title: '密码', path: '/password', icon: Lock },
+    { title: '连接', path: '/connections', icon: LinkThree },
   ]}
 ]
 </script>

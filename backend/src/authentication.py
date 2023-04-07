@@ -48,3 +48,11 @@ def password(db: Session, user: User, password: str, newpassword: str):
     db.commit()
     db.refresh(user)
     return user
+
+
+# 修改资料
+def settings(db: Session, user: User, name: str):
+    user.name = name
+    db.commit()
+    db.refresh(user)
+    return user

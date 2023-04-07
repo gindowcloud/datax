@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from .database import get_db, Model, engine
 from .response import success
-from .authentication import authenticate, session, password
+from .authentication import authenticate, session, password, settings
 from .user import tasks, schemas
 from .user.routers import router as user_router
 from .task.routers import router as task_router
@@ -28,6 +28,10 @@ class LoginItem(BaseModel):
 class PasswordItem(BaseModel):
     password: str
     newpassword: str
+
+
+class SettingsItem(BaseModel):
+    name: str
 
 
 class UserData(BaseModel):
@@ -58,6 +62,12 @@ def logout():
 @router.get("/profile", response_model=UserData)
 def profile(user=Depends(session)):
     return success(user)
+
+
+@router.post("/profile", response_model=UserData)
+def profile(item: SettingsItem, db: Session = Depends(get_db), user=Depends(session)):
+    data = settings(db, user, item.name)
+    return success(data)
 
 
 @router.post("/password", response_model=UserData)

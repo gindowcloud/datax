@@ -21,10 +21,23 @@ def find_by_username(db: Session, username: str):
 
 def create(db: Session, item: schemas.UserCreate):
     model = models.User(
+        name=item.name,
         username=item.username,
         password=pwd_context.encrypt(item.password),
+        state=item.state
     )
     db.add(model)
+    db.commit()
+    db.refresh(model)
+    return model
+
+
+def update(db: Session, model_id, item: schemas.UserCreate):
+    model = db.query(models.User).filter(models.User.id == model_id).one_or_none()
+    if model is None:
+        return None
+    model.name = item.name
+    model.state = item.state
     db.commit()
     db.refresh(model)
     return model

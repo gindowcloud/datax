@@ -13,9 +13,10 @@ const router = createRouter({
       children: [
         { path: 'dashboard', component: () => import('../views/dashboard.vue') },
         { path: 'tasks', component: () => import('../views/tasks/index.vue') },
-        { path: 'users', component: () => import('../views/users.vue') },
+        { path: 'users', component: () => import('../views/user/index.vue') },
         { path: 'connections', component: () => import('../views/connections/index.vue') },
-        { path: 'password', component: () => import('../views/password.vue') },
+        { path: 'account/profile', component: () => import('../views/account/profile.vue') },
+        { path: 'account/password', component: () => import('../views/account/password.vue') },
       ],
       meta: { auth: true }
     },
