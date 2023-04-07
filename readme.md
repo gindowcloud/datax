@@ -8,6 +8,8 @@ DataX 是阿里云 DataWorks数据集成 的开源版本，在阿里巴巴集团
 
 DataX Web 是基于 DataX 开发的一个 Web 访问套件。
 
+
+
 #### 使用方法：
 
 ```
@@ -18,9 +20,17 @@ cd datax
 docker-compose up
 ```
 
+
+
 #### 访问地址
 
 http://127.0.0.1:8000
+
+用户: admin
+
+密码: admin
+
+
 
 #### 界面预览
 
