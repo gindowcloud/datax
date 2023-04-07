@@ -10,7 +10,7 @@ DataX Web 是基于 DataX 开发的一个 Web 访问套件。
 
 
 
-#### 使用方法：
+#### 使用方法
 
 ```
 git clone https://github.com/gindowcloud/datax
