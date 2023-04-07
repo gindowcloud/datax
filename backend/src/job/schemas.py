@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 
 class JobBase(BaseModel):
+    task_id: int = None
     state: int = None
 
     class Config:
@@ -10,7 +11,6 @@ class JobBase(BaseModel):
 
 
 class JobCreate(JobBase):
-    task_id: int
     pass
 
 

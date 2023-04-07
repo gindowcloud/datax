@@ -98,9 +98,12 @@ const submit = () => {
 }
 
 const logs = ref(false)
-const exec = (row: Task) => {
-  item.value = $copy(row)
-  logs.value = true 
+const exec = (row: Task) => {  
+  logs.value = true
+  api.jobs.select({ size: 10, task_id: row.id }).then(({ data }) => {
+    item.value = row
+    item.value.jobs = data
+  })  
 }
 
 const done = () => {

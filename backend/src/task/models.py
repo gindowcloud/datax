@@ -2,7 +2,6 @@ from sqlalchemy import ForeignKey, Column, Integer, String, TIMESTAMP, Text
 from sqlalchemy.orm import relationship
 from ..database import Model
 from ..connection.models import Connection
-from ..job.models import Job
 
 
 class Task(Model):
@@ -20,4 +19,4 @@ class Task(Model):
     reader = relationship(Connection, foreign_keys=[reader_id])
     writer = relationship(Connection, foreign_keys=[writer_id])
 
-    jobs = relationship(Job)
+    jobs = relationship('Job')

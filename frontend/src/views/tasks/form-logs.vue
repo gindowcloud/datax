@@ -1,6 +1,7 @@
 <template>
   <el-dialog :model-value="show" title="添加任务" @close="close">
-    <el-form ref="form" :model="item" label-position="left" label-width="100px" label-suffix=":">
+    <ex-loading v-if="!item.id" />
+    <el-form v-else ref="form" :model="item" label-position="left" label-width="100px" label-suffix=":">
         <el-form-item label="任务名称">{{ item.name }}</el-form-item>
         <el-form-item label="读数据库">{{ item.reader?.name }} > {{ item.writer?.name }} > {{ item.table }}</el-form-item>
         <el-form-item label="运行记录">

@@ -1,0 +1,50 @@
+{
+  "job": {
+    "content": [
+      {
+        "reader": {
+          "name": "{reader_name}",
+          "parameter": {
+            "connection": [
+              {
+                "jdbcUrl": [
+                  "{reader_jdbcUrl}"
+                ],
+                "querySql": [
+                  "{querySql}"
+                ]
+              }
+            ],
+            "username": "{reader_username}",
+            "password": "{reader_password}"
+          }
+        },
+        "writer": {
+          "name": "{writer_name}",
+          "parameter": {
+            "column": [
+              "{column}"
+            ],
+            "connection": [
+              {
+                "jdbcUrl": "{writer_jdbcUrl}",
+                "table": [
+                  "{table}"
+                ]
+              }
+            ],
+            "dryRun": false,
+            "username": "{writer_username}",
+            "password": "{writer_username}",
+            "writeMode": "insert"
+          }
+        }
+      }
+    ],
+    "setting": {
+      "speed": {
+        "channel": 1
+      }
+    }
+  }
+}

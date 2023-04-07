@@ -54,30 +54,35 @@ def login(item: LoginItem, db: Session = Depends(get_db)):
     return success(data)
 
 
-@router.post("/logout")
+@router.post("/logout", name="退出登陆")
 def logout():
+    """退出登陆"""
     return success()
 
 
-@router.get("/profile", response_model=UserData)
+@router.get("/profile", response_model=UserData, name="我的资料")
 def profile(user=Depends(session)):
+    """我的资料"""
     return success(user)
 
 
-@router.post("/profile", response_model=UserData)
+@router.post("/profile", response_model=UserData, name="修改资料")
 def profile(item: SettingsItem, db: Session = Depends(get_db), user=Depends(session)):
+    """修改资料"""
     data = settings(db, user, item.name)
     return success(data)
 
 
-@router.post("/password", response_model=UserData)
+@router.post("/password", response_model=UserData, name="修改密码")
 def profile(item: PasswordItem, db: Session = Depends(get_db), user=Depends(session)):
+    """修改密码"""
     data = password(db, user, item.password, item.newpassword)
     return success(data)
 
 
-@router.post("/setup", response_model=UserData, name="安装程序")
+@router.post("/setup", response_model=UserData, name="初始安装")
 def setup(db: Session = Depends(get_db)):
+    """初始安装"""
     item = schemas.UserCreate(username="admin", password="admin")
     data = tasks.find_by_username(db, item.username)
     if not data:
