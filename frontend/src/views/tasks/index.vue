@@ -7,7 +7,13 @@
     allow-modify @modify="modify"
     allow-remove @remove="remove">
     <template #cell="{ col, row }">
-      <el-tag v-if="col.prop == 'direct'" type="success" effect="plain">{{ row.direct }}</el-tag>
+      <div v-if="col.prop == 'reader.name'">
+        <span>{{ row.reader.name }}</span>
+        <span class="color-light ml-10 mr-10">&gt;</span>
+        <span>{{ row.writer.name }}</span>
+        <span class="color-light ml-10 mr-10">&gt;</span>
+        <span class="color-green">{{ row.table }}</span>
+      </div>
     </template>
     <template #link="{ row }">
       <el-button link :icon="Airplay" @click="exec(row)">运行</el-button>
@@ -30,10 +36,8 @@ import formEdit from './form-edit.vue'
 import formLogs from './form-logs.vue'
 
 const columns = ref([
-  { label: '名称', prop: 'name', width: 200 },
-  { label: '读库', prop: 'reader.name', width: 200 },
-  { label: '写库', prop: 'writer.name', width: 300 },
-  { label: '写表', prop: 'table' },
+  { label: '名称', prop: 'name', width: 250 },
+  { label: '数据库', prop: 'reader.name' }
 ])
 
 const viewer = ref([
