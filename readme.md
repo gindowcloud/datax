@@ -24,14 +24,14 @@ http://127.0.0.1:8000
 
 #### 界面预览
 
-用户登陆
+用户登陆：
 <img src="https://github.com/gindowcloud/assets/raw/master/datax/1.png" style="zoom: 25%;" />
 
-任务管理
+任务管理：
 <img src="https://github.com/gindowcloud/assets/raw/master/datax/2.png" style="zoom:25%;" />
 
-连接管理
+连接管理：
 <img src="https://github.com/gindowcloud/assets/raw/master/datax/3.png" style="zoom:25%;" />
 
-用户管理
+用户管理：
 <img src="https://github.com/gindowcloud/assets/raw/master/datax/4.png" style="zoom:25%;" />
