@@ -10,4 +10,4 @@ class Job(Model):
     script = Column(Text, comment="执行脚本")
     state = Column(Integer, default=0, comment="任务状态")
 
-    task = relationship('Task')
+    task = relationship("Task", back_populates="jobs")

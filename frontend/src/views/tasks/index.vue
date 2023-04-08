@@ -14,6 +14,7 @@
         <span class="color-light ml-10 mr-10">&gt;</span>
         <span class="color-green">{{ row.table }}</span>
       </div>
+      <div v-if="col.prop == 'executed_at'">{{ row.executed_at ?? '-' }}</div>
     </template>
     <template #link="{ row }">
       <el-button link :icon="Airplay" @click="exec(row)">运行</el-button>
@@ -37,7 +38,8 @@ import formLogs from './form-logs.vue'
 
 const columns = ref([
   { label: '名称', prop: 'name', width: 250 },
-  { label: '数据库', prop: 'reader.name' }
+  { label: '数据库', prop: 'reader.name' },
+  { label: '最后执行', prop: 'executed_at', align: 'right' }
 ])
 
 const viewer = ref([
@@ -100,7 +102,7 @@ const submit = () => {
 const logs = ref(false)
 const exec = (row: Task) => {  
   logs.value = true
-  api.jobs.select({ size: 10, task_id: row.id }).then(({ data }) => {
+  api.jobs.select({ size: 5, task_id: row.id }).then(({ data }) => {
     item.value = row
     item.value.jobs = data
   })  

@@ -83,7 +83,7 @@ def profile(item: PasswordItem, db: Session = Depends(get_db), user=Depends(sess
 @router.post("/setup", response_model=UserData, name="初始安装")
 def setup(db: Session = Depends(get_db)):
     """初始安装"""
-    item = schemas.UserCreate(username="admin", password="admin")
+    item = schemas.UserCreate(username="admin", password="admin", name="管理员")
     data = tasks.find_by_username(db, item.username)
     if not data:
         data = tasks.create(db, item)

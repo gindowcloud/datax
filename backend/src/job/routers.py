@@ -5,7 +5,7 @@ from ..database import get_db
 from ..response import success
 from ..pagination import Page
 from ..authentication import session
-from . import schemas, tasks, run_job
+from . import schemas, tasks, job_script, job_execute
 
 router = APIRouter()
 
@@ -23,7 +23,8 @@ def search(task_id: int = None, db: Session = Depends(get_db), user=Depends(sess
 @router.post("", response_model=Data, name="新建任务")
 def create(item: schemas.JobCreate, back: BackgroundTasks, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.create(db, item)
-    back.add_task(run_job, db, data)
+    task = job_script(db, data)
+    back.add_task(job_execute, db, data, task)  # 执行任务
     return success(data)
 
 

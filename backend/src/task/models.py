@@ -19,4 +19,4 @@ class Task(Model):
     reader = relationship(Connection, foreign_keys=[reader_id])
     writer = relationship(Connection, foreign_keys=[writer_id])
 
-    jobs = relationship('Job')
+    jobs = relationship("Job", back_populates="task")

@@ -1,4 +1,8 @@
 .idea
 .env
 venv
-data
+data/datax.db
+data/*.json
+data/*.log
+data/*/*.json
+data/*/*.log
