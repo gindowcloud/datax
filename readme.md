@@ -17,6 +17,8 @@ git clone https://github.com/gindowcloud/datax
 
 cd datax
 
+cp .env.example .env
+
 docker-compose up -d
 ```
 
