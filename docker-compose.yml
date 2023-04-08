@@ -31,4 +31,3 @@ services:
       - ${DATAX_API_PORT}:80
     networks:
       - datax  
-

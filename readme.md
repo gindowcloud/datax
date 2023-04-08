@@ -73,7 +73,7 @@ VITE_BASE_URL=http://0.0.0.0:8090/api  # 页面调用的接口地址（重要，
 
 #### 版本更新
 ```bash
-git up
+git pull
 
 docker-compose build
 
