@@ -14,7 +14,7 @@
         <span class="color-light ml-10 mr-10">&gt;</span>
         <span class="color-green">{{ row.table }}</span>
       </div>
-      <div v-if="col.prop == 'executed_at'">{{ row.executed_at ?? '-' }}</div>
+      <icon-park-dot v-if="col.prop == 'state' && row.state" class="icon-state" :class="row.state == 1 ? 'color-green' : 'color-red'" />
     </template>
     <template #link="{ row }">
       <el-button link :icon="Airplay" @click="exec(row)">运行</el-button>
@@ -39,7 +39,8 @@ import formLogs from './form-logs.vue'
 const columns = ref([
   { label: '名称', prop: 'name', width: 250 },
   { label: '数据库', prop: 'reader.name' },
-  { label: '最后执行', prop: 'executed_at', align: 'right' }
+  { label: '最后执行', prop: 'executed_at', align: 'right' },
+  { label: '', prop: 'state', width: 50 }
 ])
 
 const viewer = ref([
@@ -62,7 +63,10 @@ const getData = (page = 1) => {
   loading.value = true
   para.page = page
   api.tasks.select(para).then(ret => {
-    data.value = ret.data
+    data.value = ret.data.map((task: Task) => {
+      task.executed_at = task.executed_at ? new Date(task.executed_at).toLocaleString() : '-'
+      return task
+    })
     total.value = ret.meta.pagination.total
   }).finally(() => {
     loading.value = false
@@ -110,7 +114,7 @@ const exec = (row: Task) => {
 }
 
 const done = () => {
-  ElMessage.success('添加成功')
+  ElMessage.success('添加任务成功')
   logs.value = false
   getData(para.page)
 }

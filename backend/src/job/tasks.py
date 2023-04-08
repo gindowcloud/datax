@@ -36,3 +36,13 @@ def delete(db: Session, model_id):
     db.delete(model)
     db.commit()
     return True
+
+
+def logs(db: Session, model_id):
+    model = db.query(Job).filter(Job.id == model_id).one_or_none()
+    if model is None:
+        return None
+    path = "data/task-" + str(model.task_id)
+    log = path + "/job-" + str(model.id) + ".log"
+    with open(log, mode='r') as file:
+        return file.read()

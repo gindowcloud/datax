@@ -5,7 +5,6 @@ from sqlalchemy.orm import sessionmaker
 from .config import config
 
 connect_args = {"check_same_thread": False} if config.db_connection == "sqlite" else {}
-print(connect_args)
 engine = create_engine(config.get_alchemy_url(), connect_args=connect_args)
 session = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

@@ -11,7 +11,7 @@ class TaskBase(BaseModel):
     query: str
     column: str = None
     timer: str = None
-    state: bool = None
+    state: int = None
 
     class Config:
         orm_mode = True

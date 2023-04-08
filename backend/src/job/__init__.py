@@ -5,6 +5,7 @@ from . import schemas, tasks
 from .schemas import Job
 from ..task.tasks import find as find_task
 from ..task.schemas import Task
+from ..config import config
 
 
 # 任务脚本
@@ -47,12 +48,21 @@ def job_script(db: Session, job: Job):
 
 # 任务执行
 def job_execute(db: Session, job: Job, task: Task):
+    # 文件位置
     path = "data/task-" + str(job.task_id)
     script = path + "/job-" + str(job.id) + ".json"
     log = path + "/job-" + str(job.id) + ".log"
-    cmd = f"python /datax/bin/datax.py " + script + " > " + log
-    print(cmd)
+    # 执行命令
+    cmd = config.python + " " + config.datax + " " + script + " > " + log
     os.system(cmd)
-    job.state = 2
-    task.executed_at = datetime.datetime.now()
-    db.commit()
+    # 获取结果
+    with open(log, mode='r') as file:
+        content = file.read()
+        if content.find("任务总计耗时") == -1:  # 执行不成功
+            job.state = 4
+            task.state = 2
+        else:
+            job.state = 2
+            task.state = 1
+            task.executed_at = datetime.datetime.now()
+        db.commit()

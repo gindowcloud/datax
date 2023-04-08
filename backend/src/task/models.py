@@ -14,7 +14,7 @@ class Task(Model):
     query = Column(Text, comment="查询语句")
     column = Column(Text, comment="数据字段")
     timer = Column(String(80), comment="定时器")
-    state = Column(Integer, default=1, comment="任务状态")
+    state = Column(Integer, default=0, comment="任务状态 0=无结果 1=已完成 2=已报错")
     executed_at = Column(TIMESTAMP, comment="最后执行时间")
 
     reader = relationship(Connection, foreign_keys=[reader_id])

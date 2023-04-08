@@ -27,5 +27,9 @@ class Config(BaseSettings):
                    f"{self.db_username}:{quote(self.db_password)}@{self.db_host}:{self.db_port}/" \
                    f"{self.db_database}"
 
+    # 执行参数
+    python = os.getenv("PYTHON", "python")
+    datax = os.getenv("DATAX", "/datax/bin/datax.py")
+
 
 config = Config()

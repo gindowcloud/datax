@@ -34,4 +34,5 @@ export default {
   users: new Resources('v1/users', true),
   connections: new Resources('v1/connections', true),
   jobs: new Resources('v1/jobs', true),
+  job_logs: (id: number, para?: {}) => request.get(`v1/jobs/${id}/logs`, para, true),
 } 

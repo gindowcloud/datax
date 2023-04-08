@@ -32,3 +32,9 @@ def create(item: schemas.JobCreate, back: BackgroundTasks, db: Session = Depends
 def update(model_id: int, item: schemas.JobUpdate, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.update(db, model_id, item)
     return success(data)
+
+
+@router.get("/{model_id}/logs", name="任务日志")
+def update(model_id: int, db: Session = Depends(get_db), user=Depends(session)):
+    data = tasks.logs(db, model_id)
+    return success(data)

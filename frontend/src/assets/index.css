@@ -54,4 +54,4 @@ html, body {
 .el-table .el-link .el-icon { margin-right: 3px; }
 .el-table .icon-state { float: left; margin-top: 5px; margin-right: 5px; }
 .el-form .el-select { width: 100%; }
-.el-icon, .i-icon { outline: none; }
+.el-button, .el-icon, .i-icon { outline: none; user-select: none; }

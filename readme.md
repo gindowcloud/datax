@@ -12,12 +12,12 @@ DataX Web 是基于 DataX 开发的一个 Web 访问套件。
 
 #### 使用方法
 
-```
+```bash
 git clone https://github.com/gindowcloud/datax
 
 cd datax
 
-docker-compose up
+docker-compose up -d
 ```
 
 
@@ -31,6 +31,54 @@ http://127.0.0.1:8000
 密码: admin
 
 
+
+#### 参数设置
+
+除非有特定要求，通常不用进行参数参数配置，即可运行本程序。以下列出常用可调参数：
+
+##### 运行参数：
+```bash
+vi .env.example
+
+DATAX_API_PORT=8090  # 后端运行容器端口
+DATAX_WEB_PORT=8000  # 前端运行容器端口
+
+PATH_DATA=~/.datax  # 数据存储路径，包括生成的脚本和日志
+```
+
+##### 后端参数（设置MYSQL数据库）：
+```bash
+vi backend/.env
+
+DB_CONNECTION=mysql+pymysql  # 连接驱动
+DB_HOST=127.0.0.1  # 数据库地址
+DB_PORT=3306  # 数据库端口
+DB_USERNAME=root  # 数据库用户 
+DB_PASSWORD=root  # 数据库密码
+DB_DATABASE=datax  # 连接数据库
+
+PYTHON=python  # Python 命令地址（非容器化运行时配置）
+DATAX=/datax/bin/datax.py  # Datax 执行地址（非容器化运行时配置）
+```
+
+##### 前端参数
+```bash
+vi frontend/.env
+
+VITE_APP_NAME=数据管理平台  # 项目名称
+VITE_BASE_URL=http://0.0.0.0:8090/api  # 接口访问地址（重要）
+```
+
+#### 版本更新
+```bash
+git up
+
+docker-compose build
+
+docker-compose down
+
+docker-compose up -d
+```
 
 #### 界面预览
 
