@@ -17,7 +17,7 @@ def run_job(db: Session, model: Job):
                  writer.database + "?useSSL=false"
     print(task)
     # 生成脚本文件
-    with open("data/script.example", mode='r') as file:
+    with open("asset/script.json", mode='r') as file:
         content = file.read()
     content = content.replace("{reader_name}", reader.driver + reader.direct)
     content = content.replace("{reader_jdbcUrl}", reader_url)
