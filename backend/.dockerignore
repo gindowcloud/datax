@@ -1,3 +1,4 @@
 .idea
 venv
 data/datax.db
+data/*.json
