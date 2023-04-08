@@ -22,6 +22,7 @@ def create(db: Session, item: schemas.TaskCreate):
         name=item.name,
         table=item.table,
         query=item.query,
+        column=item.column,
         timer=item.timer,
     )
     db.add(model)
@@ -39,6 +40,7 @@ def update(db: Session, model_id, item: schemas.TaskCreate):
     model.name = item.name
     model.table = item.table
     model.query = item.query
+    model.column = item.column
     model.timer = item.timer
     db.commit()
     db.refresh(model)

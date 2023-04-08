@@ -26,6 +26,7 @@ export interface Task {
   name?: string
   table?: string
   query?: string
+  column?: string
   timer?: string
   reader?: Connection
   writer?: Connection

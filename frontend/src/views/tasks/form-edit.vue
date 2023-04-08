@@ -10,7 +10,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="查询语句" prop="query">
-          <el-input v-model="item.query" type="textarea" :rows="9" input-style="white-space: nowrap" />
+          <el-input v-model="item.query" type="textarea" :rows="8" input-style="white-space: nowrap" />
         </el-form-item>
         <el-form-item label="写数据库" prop="writer_id">
           <el-select v-model="item.writer_id">
@@ -19,6 +19,9 @@
         </el-form-item>
         <el-form-item label="写入表格" prop="table">
           <el-input v-model="item.table" />
+        </el-form-item>
+        <el-form-item label="写入字段" prop="query">
+          <el-input v-model="item.column" type="textarea" :rows="4" />
         </el-form-item>
     </el-form>
     <template #footer>

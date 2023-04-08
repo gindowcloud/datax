@@ -48,6 +48,7 @@ const viewer = ref([
   { label: '查询语句', prop: 'query' },
   { label: '写数据库', prop: 'writer.name' },
   { label: '写数据表', prop: 'table' },
+  { label: '写入字段', prop: 'column' },
 ])
 
 const item = ref<Task>({})

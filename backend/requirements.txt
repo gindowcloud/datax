@@ -4,6 +4,7 @@ uvicorn
 python-dotenv
 fastapi
 fastapi_pagination
+PyMySQL
 SQLAlchemy
 passlib
 starlette

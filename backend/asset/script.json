@@ -35,7 +35,7 @@
             ],
             "dryRun": false,
             "username": "{writer_username}",
-            "password": "{writer_username}",
+            "password": "{writer_password}",
             "writeMode": "insert"
           }
         }

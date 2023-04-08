@@ -34,6 +34,7 @@ def job_script(db: Session, job: Job):
     content = content.replace("{writer_name}", writer.driver + writer.direct)
     content = content.replace("{writer_jdbcUrl}", writer_url)
     content = content.replace("{table}", task.table)
+    content = content.replace("{column}", task.column.replace("\n", " ").replace(", ", '", "'))
     content = content.replace("{writer_username}", writer.username)
     content = content.replace("{writer_password}", writer.password)
     with open(script, mode='w') as file:
@@ -49,7 +50,9 @@ def job_execute(db: Session, job: Job, task: Task):
     path = "data/task-" + str(job.task_id)
     script = path + "/job-" + str(job.id) + ".json"
     log = path + "/job-" + str(job.id) + ".log"
-    os.system(f"python datax/bin/datax.py " + script + " > " + log)
+    cmd = f"python /datax/bin/datax.py " + script + " > " + log
+    print(cmd)
+    os.system(cmd)
     job.state = 2
     task.executed_at = datetime.datetime.now()
     db.commit()
