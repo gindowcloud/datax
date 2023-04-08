@@ -63,7 +63,7 @@ PYTHON=python  # Python 命令地址（非容器化运行时配置）
 DATAX=/datax/bin/datax.py  # Datax 执行地址（非容器化运行时配置）
 ```
 
-##### 页面参数
+##### 页面参数：
 ```bash
 vi frontend/.env
 
