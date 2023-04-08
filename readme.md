@@ -42,8 +42,8 @@ http://127.0.0.1:8000
 ```bash
 vi .env
 
-DATAX_API_PORT=8090  # 后端（接口）运行容器端口
 DATAX_WEB_PORT=8000  # 前端（页面）运行容器端口
+DATAX_API_PORT=8090  # 后端（接口）运行容器端口
 
 PATH_DATA=~/.datax  # 数据存储路径，包括生成的脚本和日志
 ```
