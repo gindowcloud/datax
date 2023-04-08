@@ -11,7 +11,7 @@
         <span>{{ row.reader.name }}</span>
         <span class="color-light ml-10 mr-10">&gt;</span>
         <span>{{ row.writer.name }}</span>
-        <span class="color-light ml-10 mr-10">&gt;</span>
+        <span class="color-light ml-10 mr-10">/</span>
         <span class="color-green">{{ row.table }}</span>
       </div>
       <icon-park-dot v-if="col.prop == 'state' && row.state" class="icon-state" :class="row.state == 1 ? 'color-green' : 'color-red'" />
@@ -37,10 +37,10 @@ import formEdit from './form-edit.vue'
 import formLogs from './form-logs.vue'
 
 const columns = ref([
-  { label: '名称', prop: 'name', width: 250 },
+  { label: '名称', prop: 'name', width: 200 },
   { label: '数据库', prop: 'reader.name' },
-  { label: '最后执行', prop: 'executed_at', align: 'right' },
-  { label: '', prop: 'state', width: 50 }
+  { label: '最后执行', prop: 'executed_at', align: 'right', width: 150 },
+  { label: '', prop: 'state', width: 40 }
 ])
 
 const viewer = ref([
