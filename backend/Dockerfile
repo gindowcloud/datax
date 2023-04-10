@@ -1,12 +1,9 @@
-# FROM registry.cn-shenzhen.aliyuncs.com/gindowcloud/python
 FROM python
 
 WORKDIR /java
 RUN wget -O - "https://datax-opensource.oss-cn-hangzhou.aliyuncs.com/202303/datax.tar.gz" | tar -xzf - -C /
 RUN wget -O - "https://download.oracle.com/java/20/latest/jdk-20_linux-x64_bin.tar.gz" | tar -xzf - -C ./
-# RUN wget -O - "https://data.gindow.com/softwares/jdk-8u361-linux-x64.tar.gz" | tar -xzf - -C ./
 ENV JAVA_HOME /java/jdk-20
-# ENV JAVA_HOME /java/jdk1.8.0_361
 ENV PATH $JAVA_HOME/bin:$PATH
 
 WORKDIR /data

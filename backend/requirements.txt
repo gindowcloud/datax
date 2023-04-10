@@ -2,9 +2,9 @@ requests
 pydantic
 uvicorn
 python-dotenv
+starlette
 fastapi
 fastapi_pagination
 PyMySQL
 SQLAlchemy
 passlib
-starlette

@@ -2,7 +2,7 @@ from fastapi import HTTPException
 from typing import Union
 
 
-def success(data: Union = None):
+def success(data: Union[list, dict, str] = None):
     return {"code": 200, "data": data}
 
 

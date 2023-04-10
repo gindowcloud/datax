@@ -39,7 +39,7 @@ import formLogs from './form-logs.vue'
 const columns = ref([
   { label: '名称', prop: 'name', width: 200 },
   { label: '数据库', prop: 'reader.name' },
-  { label: '最后执行', prop: 'executed_at', align: 'right', width: 150 },
+  { label: '最后执行', prop: 'executed_at', align: 'right', width: 160 },
   { label: '', prop: 'state', width: 40 }
 ])
 
