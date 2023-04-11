@@ -15,9 +15,9 @@ class Task(Model):
     table = Column(String(50), comment="写数据表")
     column = Column(Text, comment="数据字段")
     timer = Column(String(80), comment="定时器")
+    incremental = Column(Boolean, comment="增量更新")
     state = Column(Integer, default=0, comment="任务状态 0=无结果 1=已完成 2=已报错")
     executed_at = Column(TIMESTAMP, comment="最后执行时间")
-    incremental = Column(Boolean, comment="开启增量更新")
 
     reader = relationship(Connection, foreign_keys=[reader_id])
     writer = relationship(Connection, foreign_keys=[writer_id])

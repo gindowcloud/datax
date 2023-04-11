@@ -8,7 +8,7 @@ class TaskBase(BaseModel):
     writer_id: int
     name: str
     query: str
-    date: str
+    date: str = None
     table: str
     column: str
     timer: str = None
