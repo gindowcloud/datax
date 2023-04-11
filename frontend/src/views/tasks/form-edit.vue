@@ -3,14 +3,20 @@
     <el-form ref="form" :model="item" :rules="rules" label-width="100px" label-suffix=":">
         <el-form-item label="任务名称" prop="name">
           <el-input v-model="item.name" />
-        </el-form-item>
+        </el-form-item>        
         <el-form-item label="读数据库" prop="reader_id">
           <el-select v-model="item.reader_id">
-            <el-option v-for="(item, key) in connections.filter(j => j.direct == 'reader')" :value="item.id" :label="item.name" />
+            <el-option v-for="item in connections.filter(j => j.direct == 'reader')" :value="item.id" :label="item.name" />
           </el-select>
-        </el-form-item>
+        </el-form-item>        
         <el-form-item label="查询语句" prop="query">
           <el-input v-model="item.query" type="textarea" :rows="8" input-style="white-space: nowrap" />
+        </el-form-item>
+        <el-form-item label="增量更新" required>
+          <el-switch v-model="item.incremental">增量更新</el-switch>
+        </el-form-item>
+        <el-form-item label="日期字段" prop="date" v-if="item.incremental">
+          <el-input v-model="item.date" />
         </el-form-item>
         <el-form-item label="写数据库" prop="writer_id">
           <el-select v-model="item.writer_id">
@@ -20,7 +26,7 @@
         <el-form-item label="写入表格" prop="table">
           <el-input v-model="item.table" />
         </el-form-item>
-        <el-form-item label="写入字段" prop="query">
+        <el-form-item label="写入字段" prop="column">
           <el-input v-model="item.column" type="textarea" :rows="4" />
         </el-form-item>
     </el-form>
@@ -56,7 +62,9 @@ const rules = reactive<FormRules>({
   reader_id: [{ required: true, message: '请输入读数据库', trigger: 'blur' }],
   writer_id: [{ required: true, message: '请输入写数据库', trigger: 'blur' }],
   query: [{ required: true, message: '请输入查询语句', trigger: 'blur' }],
-  table: [{ required: true, message: '请输入写数据表', trigger: 'blur' }]
+  table: [{ required: true, message: '请输入写数据表', trigger: 'blur' }],
+  column: [{ required: true, message: '请选择写入字段', trigger: 'blur' }],
+  date: [{ required: true, message: '请输入日期字段', trigger: 'blur' }],
 })
 
 watchEffect(() => item.value = props.data)

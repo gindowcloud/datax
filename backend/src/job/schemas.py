@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 class JobBase(BaseModel):
     task_id: int = None
+    incremental: bool = None
     state: int = None
 
     class Config:

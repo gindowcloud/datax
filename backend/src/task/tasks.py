@@ -20,10 +20,12 @@ def create(db: Session, item: schemas.TaskCreate):
         reader_id=item.reader_id,
         writer_id=item.writer_id,
         name=item.name,
-        table=item.table,
         query=item.query,
+        date=item.date,
+        table=item.table,
         column=item.column,
         timer=item.timer,
+        incremental=item.incremental,
     )
     db.add(model)
     db.commit()
@@ -38,10 +40,12 @@ def update(db: Session, model_id, item: schemas.TaskCreate):
     model.reader_id = item.reader_id
     model.writer_id = item.writer_id
     model.name = item.name
-    model.table = item.table
     model.query = item.query
+    model.date = item.date
+    model.table = item.table
     model.column = item.column
     model.timer = item.timer
+    model.incremental = item.incremental
     db.commit()
     db.refresh(model)
     return model

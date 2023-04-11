@@ -36,15 +36,23 @@ const rules = reactive<FormRules>({
   password: [{ required: true, message: '请输入用户密码', trigger: 'blur' }],
   newpassword: [
     { required: true, message: '请输入新密码', trigger: 'blur' },
-    { required: true, trigger: "blur", validator: (rule: InternalRuleItem, value: Value, callback: (error?: Error) => void) => {
+    {
+      required: true,
+      trigger: "blur",
+      validator: (rule: InternalRuleItem, value: Value, callback: (error?: Error) => void) => {
         value !== item.value.password ? callback() : callback(new Error("请设置新的密码"))
-    } }
+      }
+    }
   ],
   repassword: [
     { required: true, message: '请输入确认密码', trigger: 'blur' },
-    { required: true, trigger: "blur", validator: (rule: InternalRuleItem, value: Value, callback: (error?: Error) => void) => {
+    {
+      required: true,
+      trigger: "blur",
+      validator: (rule: InternalRuleItem, value: Value, callback: (error?: Error) => void) => {
         value === item.value.newpassword ? callback() : callback(new Error("两次输入的密码不一致"))
-    } }
+      }
+    }
   ]
 })
 

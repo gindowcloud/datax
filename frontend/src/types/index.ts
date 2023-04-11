@@ -24,14 +24,16 @@ export interface Task {
   reader_id?: number
   writer_id?: number
   name?: string
-  table?: string
   query?: string
+  date?: string
+  table?: string
   column?: string
   timer?: string
   reader?: Connection
   writer?: Connection
   jobs?: Job[]
   executed_at?: string
+  incremental?: boolean
 }
 
 export interface Job {

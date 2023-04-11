@@ -14,6 +14,10 @@
         <span class="color-light ml-10 mr-10">/</span>
         <span class="color-green">{{ row.table }}</span>
       </div>
+      <div v-if="col.prop == 'incremental'">
+        <span v-if="row.incremental" class="color-green">是</span>
+        <span v-else class="color-orange">否</span>
+      </div>
       <icon-park-dot v-if="col.prop == 'state' && row.state" class="icon-state" :class="row.state == 1 ? 'color-green' : 'color-red'" />
     </template>
     <template #link="{ row }">
@@ -39,6 +43,7 @@ import formLogs from './form-logs.vue'
 const columns = ref([
   { label: '名称', prop: 'name', width: 200 },
   { label: '数据库', prop: 'reader.name' },
+  { label: '增量更新', prop: 'incremental', align: 'center', width: 120 },
   { label: '最后执行', prop: 'executed_at', align: 'right', width: 160 },
   { label: '', prop: 'state', width: 40 }
 ])
@@ -114,7 +119,7 @@ const exec = (row: Task) => {
 }
 
 const done = () => {
-  ElMessage.success('添加任务成功')
+  ElMessage.success('添加成功')
   logs.value = false
   getData(para.page)
 }

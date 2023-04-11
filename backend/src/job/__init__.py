@@ -12,6 +12,8 @@ from ..config import config
 def job_script(db: Session, job: Job):
     # 获取任务信息
     task = find_task(db, job.task_id)
+    where = task.date + " > " + str(task.created_at) if job.incremental else ""  # 查询条件
+    pre_sql = "" if job.incremental else "truncate table " + task.table  # 预执行语句
     reader = task.reader
     writer = task.writer
     reader_url = "jdbc:" + reader.driver + "://" + \
@@ -38,6 +40,8 @@ def job_script(db: Session, job: Job):
     content = content.replace("{column}", task.column.replace("\n", " ").replace(", ", '", "'))
     content = content.replace("{writer_username}", writer.username)
     content = content.replace("{writer_password}", writer.password)
+    content = content.replace("{where}", where)
+    content = content.replace("{preSql}", pre_sql)
     with open(script, mode='w') as file:
         file.write(content)
     # 变更任务状态

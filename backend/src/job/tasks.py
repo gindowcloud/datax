@@ -11,6 +11,7 @@ def search(db: Session, task_id: int = None):
 def create(db: Session, item: schemas.JobCreate):
     model = Job(
         task_id=item.task_id,
+        incremental=item.incremental,
         state=0,
     )
     db.add(model)
@@ -23,6 +24,7 @@ def update(db: Session, model_id, item: schemas.JobUpdate):
     model = db.query(Job).filter(Job.id == model_id).one_or_none()
     if model is None:
         return None
+    model.incremental = item.incremental
     model.state = item.state
     db.commit()
     db.refresh(model)

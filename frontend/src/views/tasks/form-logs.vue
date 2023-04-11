@@ -16,6 +16,11 @@
                 <span :class="states[row.state].class">{{ states[row.state].label }}</span>
               </template>
             </el-table-column>
+            <el-table-column label="运行日期" align="right" width="180">
+              <template #default="{ row }">
+                {{ new Date(row.created_at).toLocaleString() }}
+              </template>
+            </el-table-column>
             <el-table-column label="操作" align="right" width="120">
               <template #default="{ row }">
                 <el-link :underline="false" :disabled="row.state != PENDING" @click="cancel(row)">取消</el-link>
@@ -27,7 +32,8 @@
     </el-form>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="primary" :loading="loading" :disabled="disabled" @click="submit">运行</el-button>
+      <el-button type="success" :loading="loading" :disabled="disabled" @click="submit(true)" v-if="item.incremental">增量更新</el-button>
+      <el-button type="danger" :loading="loading" :disabled="disabled" @click="submit()">全量更新</el-button>
     </template>
   </el-dialog>
   <el-dialog :model-value="logShow" title="任务日志" :modal="false" @close="logShow = false">
@@ -71,9 +77,9 @@ const disabled = computed(() => {
 watchEffect(() => item.value = props.data)
 
 const close = () => emit('close')
-const submit = () => {
+const submit = (incremental = false) => {
   loading.value = true
-  api.jobs.create({task_id: item.value.id})
+  api.jobs.create({task_id: item.value.id, incremental})
     .then(() => emit('submit'))
     .finally(() => loading.value = false)
 }

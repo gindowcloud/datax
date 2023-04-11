@@ -7,11 +7,13 @@ class TaskBase(BaseModel):
     reader_id: int
     writer_id: int
     name: str
-    table: str
     query: str
-    column: str = None
+    date: str
+    table: str
+    column: str
     timer: str = None
     state: int = None
+    incremental: bool = None
 
     class Config:
         orm_mode = True

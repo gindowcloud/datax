@@ -45,7 +45,7 @@
         </el-col>
         <el-col :span="span">
           <el-form-item label="连接密码" prop="password">
-            <el-input v-model="item.password" />
+            <el-input v-model="item.password" type="password" show-password />
           </el-form-item>
         </el-col>
       </el-row>

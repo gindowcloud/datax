@@ -12,6 +12,9 @@
                 ],
                 "querySql": [
                   "{querySql}"
+                ],
+                "where": [
+                  "{where}"
                 ]
               }
             ],
@@ -22,9 +25,6 @@
         "writer": {
           "name": "{writer_name}",
           "parameter": {
-            "column": [
-              "{column}"
-            ],
             "connection": [
               {
                 "jdbcUrl": "{writer_jdbcUrl}",
@@ -33,10 +33,16 @@
                 ]
               }
             ],
-            "dryRun": false,
+            "column": [
+              "{column}"
+            ],
+            "preSql": [
+              "{preSql}"
+            ],
             "username": "{writer_username}",
             "password": "{writer_password}",
-            "writeMode": "insert"
+            "writeMode": "insert",
+            "dryRun": false
           }
         }
       }
