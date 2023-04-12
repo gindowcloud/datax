@@ -15,26 +15,26 @@ class Data(BaseModel):
     data: schemas.Job
 
 
-@router.get("", response_model=Page[schemas.Job], name="任务列表")
+@router.get("", response_model=Page[schemas.Job], name="作业列表")
 def search(task_id: int = None, db: Session = Depends(get_db), user=Depends(session)):
     return tasks.search(db, task_id)
 
 
-@router.post("", response_model=Data, name="新建任务")
+@router.post("", response_model=Data, name="新建作业")
 def create(item: schemas.JobCreate, back: BackgroundTasks, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.create(db, item)
     task = job_script(db, data)
-    back.add_task(job_execute, db, data, task)  # 执行任务
+    back.add_task(job_execute, db, data, task)  # 执行作业
     return success(data)
 
 
-@router.patch("/{model_id}", name="更新任务")
+@router.patch("/{model_id}", name="更新作业")
 def update(model_id: int, item: schemas.JobUpdate, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.update(db, model_id, item)
     return success(data)
 
 
-@router.get("/{model_id}/logs", name="任务日志")
+@router.get("/{model_id}/logs", name="作业日志")
 def update(model_id: int, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.logs(db, model_id)
     return success(data)

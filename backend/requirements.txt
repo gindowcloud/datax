@@ -7,4 +7,5 @@ fastapi
 fastapi_pagination
 PyMySQL
 SQLAlchemy
+apscheduler
 passlib

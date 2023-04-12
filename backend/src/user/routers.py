@@ -24,7 +24,7 @@ def search(db: Session = Depends(get_db), user=Depends(session)):
 def create(item: schemas.UserCreate, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.find_by_username(db, item.username)
     if data:
-        raise HTTPException(500, detail="账号已存在")
+        raise HTTPException(status_code=500, detail="账号已存在")
     data = tasks.create(db, item)
     return success(data)
 

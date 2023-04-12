@@ -37,11 +37,11 @@ import { Plus, Airplay } from '@icon-park/vue-next'
 import { ElMessage } from 'element-plus'
 import { $copy } from '../../utils'
 import api from '../../api'
-import formEdit from './form-edit.vue'
-import formLogs from './form-logs.vue'
+import formEdit from './components/edit.vue'
+import formLogs from './components/logs.vue'
 
 const columns = ref([
-  { label: '名称', prop: 'name', width: 200 },
+  { label: '任务名称', prop: 'name', width: 200 },
   { label: '数据库', prop: 'reader.name' },
   { label: '增量更新', prop: 'incremental', align: 'center', width: 120 },
   { label: '最后执行', prop: 'executed_at', align: 'right', width: 160 },

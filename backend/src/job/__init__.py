@@ -8,7 +8,7 @@ from ..task.schemas import Task
 from ..config import config
 
 
-# 任务脚本
+# 作业脚本
 def job_script(db: Session, job: Job):
     # 获取任务信息
     task = find_task(db, job.task_id)
@@ -44,13 +44,13 @@ def job_script(db: Session, job: Job):
     content = content.replace("{preSql}", pre_sql)
     with open(script, mode='w') as file:
         file.write(content)
-    # 变更任务状态
+    # 变更作业状态
     job.state = 1
     db.commit()
     return task
 
 
-# 任务执行
+# 执行作业
 def job_execute(db: Session, job: Job, task: Task):
     # 文件位置
     path = "data/task-" + str(job.task_id)

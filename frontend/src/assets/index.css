@@ -25,6 +25,8 @@ html, body {
 .mr-5 { margin-right: 5px; }
 .mr-10 { margin-right: 10px; }
 .wp-100 { width: 100%; }
+.max-width-400 { max-width: 400px; }
+.max-width-500 { max-width: 500px; }
 .float-left { float: left; }
 .float-right { float: right; }
 .text-left { text-align: left; }

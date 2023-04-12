@@ -30,9 +30,10 @@ export default {
   profile: (para?: {}) => request.get('v1/profile', para, true),
   setting: (para?: {}) => request.post('v1/profile', para, true),
   password: (para?: {}) => request.post('v1/password', para, true),
-  tasks: new Resources('v1/tasks', true),
   users: new Resources('v1/users', true),
   connections: new Resources('v1/connections', true),
+  tasks: new Resources('v1/tasks', true),
   jobs: new Resources('v1/jobs', true),
   job_logs: (id: number, para?: {}) => request.get(`v1/jobs/${id}/logs`, para, true),
+  schedules: new Resources('v1/schedules', true),
 } 

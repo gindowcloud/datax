@@ -10,6 +10,7 @@ from .user.routers import router as user_router
 from .task.routers import router as task_router
 from .job.routers import router as job_router
 from .connection.routers import router as connection_router
+from .schedule.routers import router as schedule_router
 
 Model.metadata.create_all(bind=engine)  # 建数据表
 
@@ -18,6 +19,7 @@ router.include_router(user_router, prefix="/users")
 router.include_router(task_router, prefix="/tasks")
 router.include_router(job_router, prefix="/jobs")
 router.include_router(connection_router, prefix="/connections")
+router.include_router(schedule_router, prefix="/schedules")
 
 
 class LoginItem(BaseModel):

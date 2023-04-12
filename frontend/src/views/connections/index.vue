@@ -22,7 +22,7 @@ import { ref, reactive } from 'vue'
 import { Plus  } from '@icon-park/vue-next'
 import { $copy } from '../../utils'
 import api from '../../api'
-import formEdit from './form-edit.vue'
+import formEdit from './components/edit.vue'
 
 const columns = ref([
   { label: '方向', prop: 'direct', width: 150 },

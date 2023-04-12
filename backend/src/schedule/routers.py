@@ -12,16 +12,16 @@ router = APIRouter()
 
 class Data(BaseModel):
     code: int
-    data: schemas.Task
+    data: schemas.Schedule
 
 
-@router.get("", response_model=Page[schemas.Task], name="任务列表")
+@router.get("", response_model=Page[schemas.Schedule], name="任务列表")
 def search(db: Session = Depends(get_db), user=Depends(session)):
     return tasks.search(db)
 
 
 @router.post("", response_model=Data, name="新建任务")
-def create(item: schemas.TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
+def create(item: schemas.ScheduleCreate, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.find_by_name(db, item.name)
     if data:
         raise HTTPException(status_code=500, detail="名称已存在")
@@ -30,7 +30,7 @@ def create(item: schemas.TaskCreate, db: Session = Depends(get_db), user=Depends
 
 
 @router.patch("/{model_id}", name="更新任务")
-def update(model_id: int, item: schemas.TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
+def update(model_id: int, item: schemas.ScheduleCreate, db: Session = Depends(get_db), user=Depends(session)):
     data = tasks.update(db, model_id, item)
     return success(data)
 

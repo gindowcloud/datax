@@ -1,7 +1,6 @@
 from sqlalchemy import ForeignKey, Column, Integer, String, TIMESTAMP, Text, Boolean
 from sqlalchemy.orm import relationship
 from ..database import Model
-from ..connection.models import Connection
 
 
 class Task(Model):
@@ -19,7 +18,7 @@ class Task(Model):
     state = Column(Integer, default=0, comment="任务状态 0=无结果 1=已完成 2=已报错")
     executed_at = Column(TIMESTAMP, comment="最后执行时间")
 
-    reader = relationship(Connection, foreign_keys=[reader_id])
-    writer = relationship(Connection, foreign_keys=[writer_id])
+    reader = relationship("Connection", foreign_keys=[reader_id])
+    writer = relationship("Connection", foreign_keys=[writer_id])
 
     jobs = relationship("Job", back_populates="task")

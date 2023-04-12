@@ -21,7 +21,7 @@ import { Plus  } from '@icon-park/vue-next'
 import { $copy } from '../../utils'
 import store from '../../store'
 import api from '../../api'
-import formEdit from './form-edit.vue'
+import formEdit from './components/edit.vue'
 
 const columns = ref([
   { prop: 'state', width: 40 },

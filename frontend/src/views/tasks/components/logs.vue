@@ -42,10 +42,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { Job, Task } from '../../types'
+import type { Job, Task } from '../../../types'
 import { ref, computed, watchEffect } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
-import api from '../../api'
+import api from '../../../api'
 
 const props = defineProps({
   show: { type: Boolean, default: false },

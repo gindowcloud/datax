@@ -38,10 +38,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { Task, Connection } from '../../types'
+import type { Task, Connection } from '../../../types'
 import { ref, reactive, watchEffect } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
-import api from '../../api'
+import api from '../../../api'
 
 const props = defineProps({
   show: { type: Boolean, default: false },

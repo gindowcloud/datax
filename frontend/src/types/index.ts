@@ -40,3 +40,14 @@ export interface Job {
   id?: number
   state?: number
 }
+
+export interface Schedule {
+  id?: number
+  task_id?: number
+  name?: string
+  type?: string
+  date?: string
+  cron?: string
+  interval?: number
+  period?: string
+}

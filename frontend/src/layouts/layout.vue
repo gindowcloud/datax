@@ -7,13 +7,14 @@
 
 <script lang="ts" setup>
 import { ExLayout } from 'element-go'
-import { Airplay, PeoplesTwo, List, SettingOne, LinkThree } from '@icon-park/vue-next'
+import { Airplay, PeoplesTwo, List, SettingOne, LinkThree, AlarmClock } from '@icon-park/vue-next'
 import config from '../config'
 import viewAccount from './components/account.vue'
 
 const data = [
   { title: '首页', path: '/dashboard', icon: Airplay },
   { title: '任务', path: '/tasks', icon: List },
+  { title: '计划', path: '/schedule', icon: AlarmClock },
   { title: '设置', path: '/settings', icon: SettingOne, children: [
     { title: '用户', path: '/users', icon: PeoplesTwo },
     { title: '连接', path: '/connections', icon: LinkThree },
