@@ -85,13 +85,22 @@ docker-compose up -d
 #### 界面预览
 
 用户登陆：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/1.png" style="zoom: 50%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/11.png" style="zoom: 50%;" />
 
 任务管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/2.png" style="zoom:50%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/21.png" style="zoom:50%;" />
+
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/22.png" style="zoom:50%;" />
+
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/23.png" style="zoom:50%;" />
+
+计划管理：
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/31.png" style="zoom:50%;" />
+
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/32.png" style="zoom:50%;" />
 
 连接管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/3.png" style="zoom:50%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/41.png" style="zoom:50%;" />
 
 用户管理：
-<img src="https://github.com/gindowcloud/assets/raw/master/datax/4.png" style="zoom:50%;" />
+<img src="https://github.com/gindowcloud/assets/raw/master/datax/51.png" style="zoom:50%;" />
