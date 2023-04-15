@@ -1,6 +1,6 @@
 # DataX
 
-DataX 是阿里云 DataWorks数据集成 的开源版本，在阿里巴巴集团内被广泛使用的离线数据同步工具/平台。
+DataX 是阿里云 DataWorks 数据集成的开源版本，在阿里巴巴集团内被广泛使用的离线数据同步工具/平台。
 
 项目传送门: https://github.com/alibaba/DataX
 
