@@ -1,22 +1,23 @@
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
-from . import models, schemas
+from .models import Connection
+from .schemas import ConnectionCreate
 
 
 def search(db: Session):
-    return paginate(db.query(models.Connection))
+    return paginate(db.query(Connection))
 
 
 def find(db: Session, model_id: int):
-    return db.query(models.Connection).filter(models.Connection.id == model_id).first()
+    return db.query(Connection).filter(Connection.id == model_id).first()
 
 
 def find_by_name(db: Session, name: str):
-    return db.query(models.Connection).filter(models.Connection.name == name).first()
+    return db.query(Connection).filter(Connection.name == name).first()
 
 
-def create(db: Session, item: schemas.ConnectionCreate):
-    model = models.Connection(
+def create(db: Session, item: ConnectionCreate):
+    model = Connection(
         name=item.name,
         host=item.host,
         port=item.port,
@@ -32,8 +33,8 @@ def create(db: Session, item: schemas.ConnectionCreate):
     return model
 
 
-def update(db: Session, model_id, item: schemas.ConnectionCreate):
-    model = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
+def update(db: Session, model_id, item: ConnectionCreate):
+    model = db.query(Connection).filter(Connection.id == model_id).one_or_none()
     if model is None:
         return None
     model.direct = item.direct
@@ -51,7 +52,7 @@ def update(db: Session, model_id, item: schemas.ConnectionCreate):
 
 
 def delete(db: Session, model_id):
-    model = db.query(models.Connection).filter(models.Connection.id == model_id).one_or_none()
+    model = db.query(Connection).filter(Connection.id == model_id).one_or_none()
     if model is None:
         return None
     db.delete(model)

@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel
-from ..task.schemas import Task
+from ..task.schemas import TaskSchema
 
 
 class ScheduleBase(BaseModel):
@@ -12,7 +12,6 @@ class ScheduleBase(BaseModel):
     interval: int = None
     period: str = None
     incremental: bool = None
-    executed_at: datetime = None
 
     class Config:
         orm_mode = True
@@ -22,8 +21,13 @@ class ScheduleCreate(ScheduleBase):
     pass
 
 
-class Schedule(ScheduleBase):
-    id: int
-    task: Task = None
+class ScheduleSchema(ScheduleBase):
+    id: int = None
+    executed_at: datetime = None
     created_at: datetime = None
     updated_at: datetime = None
+
+    task: TaskSchema = None
+
+    class Config:
+        orm_mode = True

@@ -16,7 +16,7 @@ class UserCreate(UserBase):
     pass
 
 
-class User(UserBase):
-    id: int
+class UserSchema(UserBase):
+    id: int = None
     created_at: datetime = None
     updated_at: datetime = None

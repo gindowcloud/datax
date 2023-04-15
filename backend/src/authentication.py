@@ -8,8 +8,8 @@ from passlib.context import CryptContext
 from .database import get_db
 from .response import error
 from .errors import ERROR_USER_NOT_FOUND, ERROR_USER_WRONG_PASSWORD, ERROR_USER_TOKEN_EXPIRED
-from .user.tasks import find, find_by_username, put_access_token, get_access_token
 from .user.models import User
+from .user.curd import find, find_by_username, put_access_token, get_access_token
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

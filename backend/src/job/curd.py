@@ -1,14 +1,14 @@
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
-from . import schemas
 from .models import Job
+from .schemas import JobCreate
 
 
 def search(db: Session, task_id: int = None):
     return paginate(db.query(Job).filter(Job.task_id == task_id).order_by(Job.id.desc()))
 
 
-def create(db: Session, item: schemas.JobCreate):
+def create(db: Session, item: JobCreate):
     model = Job(
         task_id=item.task_id,
         incremental=item.incremental,
@@ -20,7 +20,7 @@ def create(db: Session, item: schemas.JobCreate):
     return model
 
 
-def update(db: Session, model_id, item: schemas.JobUpdate):
+def update(db: Session, model_id, item: JobCreate):
     model = db.query(Job).filter(Job.id == model_id).one_or_none()
     if model is None:
         return None

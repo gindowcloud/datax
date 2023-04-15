@@ -2,25 +2,27 @@ import hashlib
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from . import models, schemas
+from .schemas import UserCreate
+from .models import User, AccessToken
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def search(db: Session):
-    return paginate(db.query(models.User))
+    return paginate(db.query(User))
 
 
 def find(db: Session, model_id: int):
-    return db.query(models.User).filter(models.User.id == model_id).first()
+    return db.query(User).filter(User.id == model_id).first()
 
 
 def find_by_username(db: Session, username: str):
-    return db.query(models.User).filter(models.User.username == username).first()
+    return db.query(User).filter(User.username == username).first()
 
 
-def create(db: Session, item: schemas.UserCreate):
-    model = models.User(
+def create(db: Session, item: UserCreate):
+    model = User(
         name=item.name,
         username=item.username,
         password=pwd_context.encrypt(item.password),
@@ -32,8 +34,8 @@ def create(db: Session, item: schemas.UserCreate):
     return model
 
 
-def update(db: Session, model_id, item: schemas.UserCreate):
-    model = db.query(models.User).filter(models.User.id == model_id).one_or_none()
+def update(db: Session, model_id, item: UserCreate):
+    model = db.query(User).filter(User.id == model_id).one_or_none()
     if model is None:
         return None
     model.name = item.name
@@ -44,7 +46,7 @@ def update(db: Session, model_id, item: schemas.UserCreate):
 
 
 def delete(db: Session, model_id):
-    model = db.query(models.User).filter(models.User.id == model_id).one_or_none()
+    model = db.query(User).filter(User.id == model_id).one_or_none()
     if model is None:
         return None
     db.delete(model)
@@ -54,7 +56,7 @@ def delete(db: Session, model_id):
 
 def get_access_token(db: Session, token: str):
     model_id, token = token.split("|")
-    model = db.query(models.AccessToken).filter(models.AccessToken.id == model_id).first()
+    model = db.query(AccessToken).filter(AccessToken.id == model_id).first()
     if model is None:
         return None
     elif model.token != hashlib.sha256(token.encode()).hexdigest():
@@ -63,7 +65,7 @@ def get_access_token(db: Session, token: str):
 
 
 def put_access_token(db: Session, user_id: int, token: str):
-    model = models.AccessToken(user_id=user_id, token=token)
+    model = AccessToken(user_id=user_id, token=token)
     db.add(model)
     db.commit()
     db.refresh(model)

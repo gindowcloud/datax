@@ -15,11 +15,7 @@ class JobCreate(JobBase):
     pass
 
 
-class JobUpdate(JobBase):
-    pass
-
-
-class Job(JobBase):
-    id: int
+class JobSchema(JobBase):
+    id: int = None
     created_at: datetime = None
     updated_at: datetime = None

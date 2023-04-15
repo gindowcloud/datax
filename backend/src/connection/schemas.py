@@ -10,7 +10,7 @@ class ConnectionBase(BaseModel):
     database: str
     direct: str
     driver: str
-    state: bool = None
+    state: bool = True
 
     class Config:
         orm_mode = True
@@ -21,7 +21,7 @@ class ConnectionCreate(ConnectionBase):
     pass
 
 
-class Connection(ConnectionBase):
+class ConnectionSchema(ConnectionBase):
     id: int
-    created_at: datetime = None
-    updated_at: datetime = None
+    created_at: datetime
+    updated_at: datetime

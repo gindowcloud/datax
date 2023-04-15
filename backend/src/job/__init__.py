@@ -1,15 +1,23 @@
 import os
 import datetime
+from fastapi import BackgroundTasks
 from sqlalchemy.orm import Session
-from . import schemas, tasks
-from .schemas import Job
-from ..task.tasks import find as find_task
-from ..task.schemas import Task
+from .schemas import JobSchema, JobCreate
+from ..task.curd import find as find_task
+from ..task.schemas import TaskSchema
 from ..config import config
+from .curd import create
+
+
+def job_create(db: Session, item: JobCreate, back: BackgroundTasks):
+    job = create(db, item)
+    task = job_script(db, job)
+    back.add_task(job_execute, db, job, task)  # 执行作业
+    return job
 
 
 # 作业脚本
-def job_script(db: Session, job: Job):
+def job_script(db: Session, job: JobSchema):
     # 获取任务信息
     task = find_task(db, job.task_id)
     where = task.date + " > " + str(task.created_at) if job.incremental else ""  # 查询条件
@@ -51,7 +59,7 @@ def job_script(db: Session, job: Job):
 
 
 # 执行作业
-def job_execute(db: Session, job: Job, task: Task):
+def job_execute(db: Session, job: JobSchema, task: TaskSchema):
     # 文件位置
     path = "data/task-" + str(job.task_id)
     script = path + "/job-" + str(job.id) + ".json"

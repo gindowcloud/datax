@@ -20,7 +20,8 @@ const request = axios.create({ baseURL: config.baseURL })
 
 // 响应处理
 request.interceptors.response.use(
-  response => response.data.code === 200 ? response.data : reject(response.data)
+  response => response.data.code === 200 ? response.data : reject(response.data),
+  error => reject(error.response.data)
 )
 
 export default {

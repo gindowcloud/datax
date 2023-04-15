@@ -1,41 +1,41 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from ..database import get_db
 from ..response import success
 from ..pagination import Page
 from ..authentication import session
-from . import schemas, tasks
+from .schemas import TaskSchema, TaskCreate
+from .curd import search, update, delete
+from . import task_create
+
 
 router = APIRouter()
 
 
 class Data(BaseModel):
     code: int
-    data: schemas.Task
+    data: TaskSchema
 
 
-@router.get("", response_model=Page[schemas.Task], name="任务列表")
-def search(db: Session = Depends(get_db), user=Depends(session)):
-    return tasks.search(db)
+@router.get("", response_model=Page[TaskSchema], name="任务列表")
+def _search(db: Session = Depends(get_db), user=Depends(session)):
+    return search(db)
 
 
 @router.post("", response_model=Data, name="新建任务")
-def create(item: schemas.TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
-    data = tasks.find_by_name(db, item.name)
-    if data:
-        raise HTTPException(status_code=500, detail="名称已存在")
-    data = tasks.create(db, item)
+def _create(item: TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
+    data = task_create(db, item)
     return success(data)
 
 
 @router.patch("/{model_id}", name="更新任务")
-def update(model_id: int, item: schemas.TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
-    data = tasks.update(db, model_id, item)
+def _update(model_id: int, item: TaskCreate, db: Session = Depends(get_db), user=Depends(session)):
+    data = update(db, model_id, item)
     return success(data)
 
 
 @router.delete("/{model_id}", name="删除任务")
-def remove(model_id: int, db: Session = Depends(get_db), user=Depends(session)):
-    data = tasks.delete(db, model_id)
+def _delete(model_id: int, db: Session = Depends(get_db), user=Depends(session)):
+    data = delete(db, model_id)
     return success(data)

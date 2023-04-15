@@ -5,7 +5,8 @@ from pydantic import BaseModel
 from .database import get_db, Model, engine
 from .response import success
 from .authentication import authenticate, session, password, settings
-from .user import tasks, schemas
+from .user.schemas import UserSchema, UserCreate
+from .user.curd import find_by_username, create
 from .user.routers import router as user_router
 from .task.routers import router as task_router
 from .job.routers import router as job_router
@@ -38,7 +39,7 @@ class SettingsItem(BaseModel):
 
 class UserData(BaseModel):
     code: int
-    data: schemas.User
+    data: UserSchema
 
 
 # 接口心跳
@@ -85,8 +86,8 @@ def profile(item: PasswordItem, db: Session = Depends(get_db), user=Depends(sess
 @router.post("/setup", response_model=UserData, name="初始安装")
 def setup(db: Session = Depends(get_db)):
     """初始安装"""
-    item = schemas.UserCreate(username="admin", password="admin", name="管理员")
-    data = tasks.find_by_username(db, item.username)
+    item = UserCreate(username="admin", password="admin", name="管理员")
+    data = find_by_username(db, item.username)
     if not data:
-        data = tasks.create(db, item)
+        data = create(db, item)
     return success(data)

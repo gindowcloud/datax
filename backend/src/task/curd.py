@@ -1,22 +1,23 @@
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
-from . import models, schemas
+from .models import Task
+from .schemas import TaskSchema, TaskCreate
 
 
 def search(db: Session):
-    return paginate(db.query(models.Task))
+    return paginate(db.query(Task))
 
 
 def find(db: Session, model_id: int):
-    return db.query(models.Task).filter(models.Task.id == model_id).first()
+    return db.query(Task).filter(Task.id == model_id).first()
 
 
 def find_by_name(db: Session, name: str):
-    return db.query(models.Task).filter(models.Task.name == name).first()
+    return db.query(Task).filter(Task.name == name).first()
 
 
-def create(db: Session, item: schemas.TaskCreate):
-    model = models.Task(
+def create(db: Session, item: TaskCreate):
+    model = Task(
         reader_id=item.reader_id,
         writer_id=item.writer_id,
         name=item.name,
@@ -24,7 +25,6 @@ def create(db: Session, item: schemas.TaskCreate):
         date=item.date,
         table=item.table,
         column=item.column,
-        timer=item.timer,
         incremental=item.incremental,
     )
     db.add(model)
@@ -33,8 +33,8 @@ def create(db: Session, item: schemas.TaskCreate):
     return model
 
 
-def update(db: Session, model_id, item: schemas.TaskCreate):
-    model = db.query(models.Task).filter(models.Task.id == model_id).one_or_none()
+def update(db: Session, model_id, item: TaskCreate):
+    model = db.query(Task).filter(Task.id == model_id).one_or_none()
     if model is None:
         return None
     model.reader_id = item.reader_id
@@ -44,7 +44,6 @@ def update(db: Session, model_id, item: schemas.TaskCreate):
     model.date = item.date
     model.table = item.table
     model.column = item.column
-    model.timer = item.timer
     model.incremental = item.incremental
     db.commit()
     db.refresh(model)
@@ -52,7 +51,7 @@ def update(db: Session, model_id, item: schemas.TaskCreate):
 
 
 def delete(db: Session, model_id):
-    model = db.query(models.Task).filter(models.Task.id == model_id).one_or_none()
+    model = db.query(Task).filter(Task.id == model_id).one_or_none()
     if model is None:
         return None
     db.delete(model)
