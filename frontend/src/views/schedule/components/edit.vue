@@ -1,16 +1,16 @@
 <template>
   <el-dialog :model-value="show" title="添加计划" @close="close">
     <el-form ref="form" class="max-width-500" :model="item" :rules="rules" label-width="100px" label-suffix=":">
-      <el-form-item label="计划名称" prop="name">
-        <el-input v-model="item.name" />
-      </el-form-item>
       <el-form-item label="计划任务" prop="task_id">
-        <el-select v-model="item.task_id">
+        <el-select v-model="item.task_id" @change="taskChanged">
           <el-option v-for="item in tasks" :value="item.id" :label="item.name" />
         </el-select>
       </el-form-item>
+      <el-form-item label="计划名称" prop="name">
+        <el-input v-model="item.name" />
+      </el-form-item>
       <el-form-item label="触发调度" prop="type" required>
-        <el-radio-group v-model="item.type">
+        <el-radio-group v-model="item.type" @change="typeChanged">
           <el-radio-button label="cron">定时调度</el-radio-button>
           <el-radio-button label="interval">间隔调度</el-radio-button>
           <el-radio-button label="date" disabled>单次调度</el-radio-button>
@@ -60,6 +60,7 @@
 import type { Task, Schedule } from '../../../types'
 import { ref, reactive, watch, watchEffect } from 'vue'
 import { FormInstance, FormRules } from 'element-plus'
+import { scheduleTypes, scheduleTypeKeys } from '../../../types/labels'
 import api from '../../../api'
 
 const props = defineProps({
@@ -106,6 +107,14 @@ watch(() => props.data, () => {
   cron.second = split[7]
   item.value = props.data
 })
+
+const taskChanged = () => updateName()
+const typeChanged = () => updateName()
+const updateName = () => {
+  const task = props.tasks.find(j => j.id == item.value.task_id)
+  const name = scheduleTypes[item.value.type as scheduleTypeKeys].replace('调度', '')
+  item.value.name = task?.name + name + '更新计划'
+}
 
 const close = () => emit('close')
 const submit = async (form: FormInstance | undefined) => {

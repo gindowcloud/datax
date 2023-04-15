@@ -32,8 +32,8 @@
     </el-form>
     <template #footer>
       <el-button @click="close">取消</el-button>
-      <el-button type="success" :loading="loading" :disabled="disabled" @click="submit(true)" v-if="item.incremental">增量更新</el-button>
-      <el-button type="danger" :loading="loading" :disabled="disabled" @click="submit()">全量更新</el-button>
+      <el-button type="success" :loading="loading" :disabled="disabled" plain @click="submit(true)" v-if="item.incremental && item.executed_at">增量更新</el-button>
+      <el-button type="danger" :loading="loading" :disabled="disabled" plain @click="submit()">全量更新</el-button>
     </template>
   </el-dialog>
   <el-dialog :model-value="logShow" title="任务日志" :modal="false" @close="logShow = false">
@@ -71,7 +71,7 @@ const states = [
 
 // 可否添加（根据待完成任务判断）
 const disabled = computed(() => {
-  return (item.value.jobs?.filter(j => j.state === 0).length ?? 0) > 0
+  return (item.value.jobs?.filter(j => j.state === 1).length ?? 0) > 0
 })
 
 watchEffect(() => item.value = props.data)

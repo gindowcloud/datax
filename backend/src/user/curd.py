@@ -2,7 +2,7 @@ import hashlib
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from .schemas import UserCreate
+from .schemas import UserSchema, UserCreate
 from .models import User, AccessToken
 
 
@@ -13,15 +13,15 @@ def search(db: Session):
     return paginate(db.query(User))
 
 
-def find(db: Session, model_id: int):
+def find(db: Session, model_id: int) -> UserSchema:
     return db.query(User).filter(User.id == model_id).first()
 
 
-def find_by_username(db: Session, username: str):
+def find_by_username(db: Session, username: str) -> UserSchema:
     return db.query(User).filter(User.username == username).first()
 
 
-def create(db: Session, item: UserCreate):
+def create(db: Session, item: UserCreate) -> UserSchema:
     model = User(
         name=item.name,
         username=item.username,
@@ -34,7 +34,7 @@ def create(db: Session, item: UserCreate):
     return model
 
 
-def update(db: Session, model_id, item: UserCreate):
+def update(db: Session, model_id, item: UserCreate) -> UserSchema:
     model = db.query(User).filter(User.id == model_id).one_or_none()
     if model is None:
         return None
@@ -45,7 +45,7 @@ def update(db: Session, model_id, item: UserCreate):
     return model
 
 
-def delete(db: Session, model_id):
+def delete(db: Session, model_id) -> bool:
     model = db.query(User).filter(User.id == model_id).one_or_none()
     if model is None:
         return None

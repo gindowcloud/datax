@@ -69,7 +69,7 @@ const getData = (page = 1) => {
   para.page = page
   api.tasks.select(para).then(ret => {
     data.value = ret.data.map((task: Task) => {
-      task.executed_at = task.executed_at ? new Date(task.executed_at).toLocaleString() : '-'
+      task.executed_at = task.executed_at ? new Date(task.executed_at).toLocaleString() : ''
       return task
     })
     total.value = ret.meta.pagination.total

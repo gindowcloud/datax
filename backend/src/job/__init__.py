@@ -20,7 +20,7 @@ def job_create(db: Session, item: JobCreate, back: BackgroundTasks):
 def job_script(db: Session, job: JobSchema):
     # 获取任务信息
     task = find_task(db, job.task_id)
-    where = task.date + " > " + str(task.created_at) if job.incremental else ""  # 查询条件
+    where = task.date + " > " + str(task.executed_at) if job.incremental and task.executed_at else ""  # 查询条件
     pre_sql = "" if job.incremental else "truncate table " + task.table  # 预执行语句
     reader = task.reader
     writer = task.writer

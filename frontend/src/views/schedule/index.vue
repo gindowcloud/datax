@@ -15,7 +15,7 @@ import type { Schedule } from '../../types'
 import { ref, reactive } from 'vue'
 import { Plus  } from '@icon-park/vue-next'
 import { $copy } from '../../utils'
-import { scheduleTypes } from '../../types/labels'
+import { scheduleTypes, scheduleTypeKeys } from '../../types/labels'
 import api from '../../api'
 import formEdit from './components/edit.vue'
 
@@ -46,7 +46,7 @@ const getData = (page = 1) => {
   para.page = page
   api.schedules.select(para).then(ret => {
     data.value = ret.data.map((item: any) => {
-      item.typeName = scheduleTypes[item.type as 'cron' | 'interval' | 'date']
+      item.typeName = scheduleTypes[item.type as scheduleTypeKeys]
       if (item.type == 'cron') item.time = item.cron
       else if (item.type == 'interval') item.time = item.interval + ' ' + item.period
       return item

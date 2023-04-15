@@ -1,14 +1,14 @@
 from fastapi_pagination.ext.sqlalchemy import paginate
 from sqlalchemy.orm import Session
 from .models import Connection
-from .schemas import ConnectionCreate
+from .schemas import ConnectionSchema, ConnectionCreate
 
 
 def search(db: Session):
     return paginate(db.query(Connection))
 
 
-def find(db: Session, model_id: int):
+def find(db: Session, model_id: int) -> ConnectionSchema:
     return db.query(Connection).filter(Connection.id == model_id).first()
 
 
@@ -16,7 +16,7 @@ def find_by_name(db: Session, name: str):
     return db.query(Connection).filter(Connection.name == name).first()
 
 
-def create(db: Session, item: ConnectionCreate):
+def create(db: Session, item: ConnectionCreate) -> ConnectionSchema:
     model = Connection(
         name=item.name,
         host=item.host,
@@ -33,7 +33,7 @@ def create(db: Session, item: ConnectionCreate):
     return model
 
 
-def update(db: Session, model_id, item: ConnectionCreate):
+def update(db: Session, model_id, item: ConnectionCreate) -> ConnectionSchema:
     model = db.query(Connection).filter(Connection.id == model_id).one_or_none()
     if model is None:
         return None
@@ -51,7 +51,7 @@ def update(db: Session, model_id, item: ConnectionCreate):
     return model
 
 
-def delete(db: Session, model_id):
+def delete(db: Session, model_id) -> bool:
     model = db.query(Connection).filter(Connection.id == model_id).one_or_none()
     if model is None:
         return None
